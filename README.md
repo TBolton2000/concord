@@ -82,8 +82,6 @@ This is a low overhead virtual machine that runs a Linux distrubtion on a Window
 
 Feel free to poke around the files. A lot of the files are automatically generated boiler plate. We will write code in the /src/ directory.
 
-
-Test
 ---
 
 ## Typical work flow (Coding/Git guide)
