@@ -48,7 +48,8 @@ This is a low overhead virtual machine that runs a Linux distrubtion on a Window
 4. You can close this for now
 
 ### Node.js
-1. Download 12.18.3 from `https://nodejs.org/en/`
+1. Download 12.18.3 LTS from `https://nodejs.org/en/`
+2. Install
 
 ### nvm (node version manager)
 1. Open Ubuntu in Windows Terminal or Terminal on Mac
