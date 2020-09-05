@@ -10,7 +10,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "outDir": "../../dist/server",
+    "outDir": "../../../dist/services/template",
     "lib": ["ES2019"],
     "moduleResolution": "node",
     "types": ["node"],

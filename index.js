@@ -1,1 +1,1 @@
-require('./dist/server/main');
+require('./dist/services/template/main');
