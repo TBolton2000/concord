@@ -99,7 +99,9 @@ Feel free to poke around the files. A lot of the files are automatically generat
 
 ---
 ## git helpful tips
-
+- Prior to making a new branch, run `git fetch` to know about all changes from other team members from the GitHub repository to your local git repository. `git fetch` will not change any files in your local repository. In order to actually get your branches to have the changes, nagivate to that branch, `git checkout branch-name`, then run `git pull` to update your local files.
+- When in doubt, `git status` out! `git status` is your best friend and will help guide you to do what you want to do.
+- git can be very intimidating, but you will typically just use a few commands. If you need help, please ask!
 
 ---
 
