@@ -1,12 +1,43 @@
-# FAST FullStack React with TypeScript starter kit.
-
-<img src="https://github.com/gilamran/fullstack-typescript/raw/master/assets/images/logo.png" width="150">
+# concord
 
 ---
 
 ## Quick Start
 
-Just clone this repository into your own project folder. and start working
+Howdy everyone! Welcome to the new *concord* (name still pending) repository!
+
+Here is a walkthrough of all of the tools that you will need and how to install all of them.
+
+Windows Only:
+1. WSL
+2. Ubuntu for WSL
+3. Windows Terminal (optional, but a very good terminal)
+
+All:
+1. Visual Studio Code
+2. Node.js
+3. nvm
+4. git
+5. This repo
+
+### Windows Subsystem for Linux (WSL)
+This is a low overhead virtual machine that runs a Linux distrubtion on a Windows computer. We will be using this to standardize all of our terminals/command prompts in a Unix-like shell.
+1. Run Windows PowerShell as Administrator
+    1. Press windows key and type PowerShell, click `Run as Administrator` on the right side of the search window
+2. Run the command `dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart`
+3. Restart your computer
+4. WSL should be activated!
+
+### Ubuntu for WSL
+1. Open the `Microsoft Store`, press windows key and type Microsoft Store.
+2. Search for `Ubuntu` and install.
+3. You should now be able to open the `Ubuntu` application on your computer and have a fully functional Unix-like shell
+
+### Windows Terminal
+1. Open the `Microsoft Store`
+2. Search for `Windows Terminal` and install
+3. You should now have a terminal that will allow you to run PowerShell and Ubuntu
+4. Press the drop down arrow at the top to open an `Ubuntu` terminal.
 
 ```bash
 git clone https://github.com/gilamran/fullstack-typescript.git <MyProjectName>
