@@ -87,7 +87,7 @@ Feel free to poke around the files. A lot of the files are automatically generat
 1. Navigate to the `/concord` file on your computer in Terminal (Ubuntu in Windows Terminal or Terminal on Mac)
 2. Run `code .` to open this folder in Visual Studio code using a Unix-style terminal.
 3. Open the terminal in VS Code (toggle using <code>Ctrl+`</code> on Windows or <code>Cmd+`</code> on Mac)
-4. Create a new **branch** in git by using `git checkout new-branch-name`. See below for more information on git.
+4. Create a new **branch** in git by using `git checkout -b new-branch-name`. See below for more information on git.
 5. Make changes to files, complete tasks.
 6. Run `git status` to see what files you have made changes to.
 7. Queue changes up to save to git using `git add filename` or add all using `git add .`
@@ -98,6 +98,7 @@ Feel free to poke around the files. A lot of the files are automatically generat
 12. If there are some problems, just go back to that branch, make the changes, commit, and push to GitHub for code to be rereviewed.
 
 ---
+
 ## git helpful tips
 - Prior to making a new branch, run `git fetch` to know about all changes from other team members from the GitHub repository to your local git repository. `git fetch` will not change any files in your local repository. In order to actually get your branches to have the changes, nagivate to that branch, `git checkout branch-name`, then run `git pull` to update your local files.
 - When in doubt, `git status` out! `git status` is your best friend and will help guide you to do what you want to do.
