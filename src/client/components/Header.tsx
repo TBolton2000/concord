@@ -15,8 +15,9 @@ export const Header: React.FunctionComponent = () => {
     <AppBar position='fixed' className={classes.appBar}>
       <Toolbar>
         <Typography variant='h6' noWrap>
-          Fullstack TypeScript
+          Concord
         </Typography>
+        {/* Add a gear IconButton to the header and a display the users name at the top OR a "login/sing up" button */}
       </Toolbar>
     </AppBar>
   );
