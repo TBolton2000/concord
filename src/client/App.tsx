@@ -10,6 +10,10 @@ import { LazyLoadingExample } from './components/LazyLoadingExample';
 import { RouterExample } from './components/RouterExample';
 import { StyledComponentsExample } from './components/StyledComponentsExample';
 import { UsersList } from './components/UsersList';
+import { Login } from './components/Login';
+import { SignUp } from './components/Signup';
+import { DashboardCalendar } from './components/DashboardCalendar';
+import { DashboardAllEvents } from './components/DashboardAllEvents';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,6 +46,10 @@ export const App = () => {
             <Route path='/lazy-example' component={LazyLoadingExample} />
             <Route path='/styled-example' component={StyledComponentsExample} />
             <Route path='/router-example/:slug' component={RouterExample} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={SignUp} />
+            <Route path='/dashboard-upper' component={DashboardCalendar} />
+            <Route path='/dashboard-lower' component={DashboardAllEvents} />
           </Switch>
         </main>
       </div>

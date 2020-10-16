@@ -83,6 +83,33 @@ export const SideMenu: React.FunctionComponent = () => {
           <ListItemText primary='React-Router' />
         </ListItem>
       </List>
+      <Divider/>
+      <List>
+        <ListItem button component={NavLinkMui} to='/login'>
+          <ListItemIcon>
+            <FetchIcon />
+          </ListItemIcon>
+          <ListItemText primary='Login' />
+        </ListItem>
+        <ListItem button component={NavLinkMui} to='/signup'>
+          <ListItemIcon>
+            <LazyIcon />
+          </ListItemIcon>
+          <ListItemText primary='Sign Up' />
+        </ListItem>
+        <ListItem button component={NavLinkMui} to='/dashboard-upper'>
+          <ListItemIcon>
+            <StyledIcon />
+          </ListItemIcon>
+          <ListItemText primary='Dashboard Upper' />
+        </ListItem>
+        <ListItem button component={NavLinkMui} to='/dashboard-lower'>
+          <ListItemIcon>
+            <RouterIcon />
+          </ListItemIcon>
+          <ListItemText primary='Dashboard Lower' />
+        </ListItem>
+      </List>
     </Drawer>
   );
 };
