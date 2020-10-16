@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, TextField, Button, CardContent, Paper, Link, Tabs, CardHeader, Tab, ValidatorForm, TextValidator } from "@material-ui/core";
+import { Card, TextField, Button, CardContent, Paper, Link, Tabs, CardHeader, Tab } from "@material-ui/core";
 
 const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
     return (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -16,16 +16,12 @@ export const SignUp: React.FC<SignUpProps> = () => {
     const [name, setName] = useState("");
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmedpassword, setConfirmedPassword] = useState("");
+    const [confirmedPassword, setConfirmedPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [confirmedemail, setConfirmedEmail] = useState("");
+    const [confirmedEmail, setConfirmedEmail] = useState("");
 
-    const validateEmail = () => {
-        return confirmedemail == email || confirmedemail === "";
-    }
-
-    const validatePassword = () => {
-        return confirmedpassword == password || confirmedpassword === "";
+    const areSame = (confirmed: string, regular: string) => {
+        return confirmed == regular || confirmed === "";
     }
 
     const properEmail = () => {
@@ -35,11 +31,7 @@ export const SignUp: React.FC<SignUpProps> = () => {
     }
 
     const properPassword = () => {
-        if ((password.length < 9 || password.length > 255) && password.length > 0){
-            return false
-        } else {
-            return true
-        }
+        return !((password.length < 9 || password.length > 255) && password.length > 0); 
     }
     
 
@@ -53,41 +45,24 @@ export const SignUp: React.FC<SignUpProps> = () => {
     return(
         <div>
             <Paper square>
-                    <Card>
-                            <CardContent>
-                                <Tabs indicatorColor="primary" textColor="primary">
-                                    <Tab label="Sign Up" />
-                                    <Link href='/login'><Tab label="Login" /></Link>
-                                </Tabs>
-                            </CardContent>
-                            <CardContent>
-                                <TextField label="Name" onChange={onTextFieldUpdate(setName)}></TextField>
-                            </CardContent>
-                            <CardContent>
-                                <TextField label="Username" onChange={onTextFieldUpdate(setUserName)}></TextField>
-                            </CardContent>
-                            <CardContent>
-                                <TextField error={!properEmail()} label="Email" onChange={onTextFieldUpdate(setEmail)} helperText={!properEmail() ?  'Email is Invalid' : ''}></TextField>
-                            </CardContent>
-                            
-                            <CardContent>
-                                <TextField error = {!validateEmail()} label="Confirm Email" onChange={onTextFieldUpdate(setConfirmedEmail)} helperText={!validateEmail() ? 'Emails do not match' : ''}></TextField>
-                            </CardContent>
-                            <CardContent>
-                                <TextField error = {!properPassword()} label="Password" onChange={onTextFieldUpdate(setPassword)} helperText={!properPassword() ? 'Password must be between 9 and 255 characters' : ''}></TextField>
-                            </CardContent>
-                            <CardContent>
-                                <TextField error = {!validatePassword()} label="Confirm Password" onChange={onTextFieldUpdate(setConfirmedPassword)} helperText={!validatePassword() ? 'Passwords do not match' : ''}></TextField>
-                            </CardContent>
-                            <CardContent>
-                                <Button onClick={()=>{printData(name, userName, email, password)}}>
-                                    SUBMIT
-                                </Button>
-                            </CardContent>
-                            
-                    </Card>
+                <Card>
+                    <CardContent>
+                        <Tabs indicatorColor="primary" textColor="primary" value={1}>
+                            <Link href='/login'><Tab label="Login" /></Link>
+                            <Tab label="Sign Up" />
+                        </Tabs>
+                        <TextField label="Name" onChange={onTextFieldUpdate(setName)}></TextField>
+                        <TextField label="Username" onChange={onTextFieldUpdate(setUserName)}></TextField>
+                        <TextField error={!properEmail()} label="Email" onChange={onTextFieldUpdate(setEmail)} helperText={!properEmail() ?  'Email is Invalid' : ''}></TextField>
+                        <TextField error = {!areSame(confirmedEmail, email)} label="Confirm Email" onChange={onTextFieldUpdate(setConfirmedEmail)} helperText={!areSame(confirmedEmail, email) ? 'Emails do not match' : ''}></TextField>
+                        <TextField error = {!properPassword()} label="Password" onChange={onTextFieldUpdate(setPassword)} helperText={!properPassword() ? 'Password must be between 9 and 255 characters' : ''}></TextField>
+                        <TextField error = {!areSame(confirmedPassword, password)} label="Confirm Password" onChange={onTextFieldUpdate(setConfirmedPassword)} helperText={!areSame(confirmedPassword, password) ? 'Passwords do not match' : ''}></TextField>
+                        <Button onClick={()=>{printData(name, userName, email, password)}}>
+                            Sign Up
+                        </Button>
+                    </CardContent>
+                </Card>
             </Paper>
-
         </div>
     );
 }
