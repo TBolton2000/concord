@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, TextField, Button, CardContent, Paper, Link, Tabs, Tab } from "@material-ui/core";
+import { Card, TextField, Button, CardContent, Paper, Link, Tabs, Tab, Grid } from "@material-ui/core";
 
 const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
     return (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -43,24 +43,41 @@ export const SignUp: React.FC<SignUpProps> = () => {
 
     return(
         <div>
-            <Paper square>
-                <Card>
-                    <CardContent>
-                        <Tabs indicatorColor="primary" textColor="primary" value={1}>
-                            <Link href='/login'><Tab label="Login" /></Link>
+            <Paper style={{
+                maxWidth: "500px",
+                margin: "auto"
+            }}>
+                <Grid container direction="column" alignContent="center" alignItems="center" spacing={1}>
+                    <Grid xs={12} item>
+                        <Tabs indicatorColor="primary" textColor="primary" variant="fullWidth" value={1}>
+                            <Tab label="Login" href="/login"/>
                             <Tab label="Sign Up" />
                         </Tabs>
-                        <TextField label="Name" onChange={onTextFieldUpdate(setName)}></TextField>
-                        <TextField label="Username" onChange={onTextFieldUpdate(setUserName)}></TextField>
-                        <TextField label="Email" onChange={onTextFieldUpdate(setEmail)} helperText={!properEmail() ?  'Email is Invalid' : ''} error={!properEmail()}></TextField>
-                        <TextField label="Confirm Email" onChange={onTextFieldUpdate(setConfirmedEmail)} helperText={!areSame(confirmedEmail, email) ? 'Emails do not match' : ''} error={!areSame(confirmedEmail, email)}></TextField>
-                        <TextField label="Password" onChange={onTextFieldUpdate(setPassword)} helperText={!properPassword() ? 'Password must be between 9 and 255 characters' : ''} error={!properPassword()} type="password"></TextField>
-                        <TextField label="Confirm Password" onChange={onTextFieldUpdate(setConfirmedPassword)} helperText={!areSame(confirmedPassword, password) ? 'Passwords do not match' : ''} error={!areSame(confirmedPassword, password)} type="password"></TextField>
-                        <Button onClick={()=>{printData(name, userName, email, password)}}>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Name" autoFocus fullWidth onChange={onTextFieldUpdate(setName)}></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Username" fullWidth onChange={onTextFieldUpdate(setUserName)}></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Email" fullWidth onChange={onTextFieldUpdate(setEmail)} helperText={!properEmail() ?  'Email is Invalid' : ''} error={!properEmail()}></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Confirm Email" fullWidth onChange={onTextFieldUpdate(setConfirmedEmail)} helperText={!areSame(confirmedEmail, email) ? 'Emails do not match' : ''} error={!areSame(confirmedEmail, email)}></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Password" fullWidth onChange={onTextFieldUpdate(setPassword)} helperText={!properPassword() ? 'Password must be between 9 and 255 characters' : ''} error={!properPassword()} type="password"></TextField>
+                    </Grid>
+                    <Grid xs={12} item >
+                        <TextField label="Confirm Password" fullWidth onChange={onTextFieldUpdate(setConfirmedPassword)} helperText={!areSame(confirmedPassword, password) ? 'Passwords do not match' : ''} error={!areSame(confirmedPassword, password)} type="password"></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <Button variant="contained" onClick={()=>{printData(name, userName, email, password)}}>
                             Sign Up
                         </Button>
-                    </CardContent>
-                </Card>
+                    </Grid>
+                </Grid>
             </Paper>
         </div>
     );
