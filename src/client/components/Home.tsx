@@ -30,6 +30,9 @@ export const Home: React.FunctionComponent = () => {
             </a>
             .
           </Typography>
+          <Typography>
+            Rey Munda
+          </Typography>
         </CardContent>
       </Card>
     </Grid>
