@@ -2,7 +2,6 @@ import { AppBar, makeStyles, Toolbar, Typography, Button, IconButton } from '@ma
 import { createStyles, Theme } from '@material-ui/core/styles';
 import React, { Fragment } from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
