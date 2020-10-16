@@ -26,19 +26,21 @@ export const Login: React.FC<LoginProps> = () => {
 
             <Paper square>
                 <Card>
-                    <CardHeader title='Login Page' />
-                        <CardContent>
-                            <Tabs
-                                indicatorColor="primary"
-                                textColor="primary">
-                                <Tab label="Login" />
-                                <Link href='/signup'><Tab label="Sign Up" /></Link>
-                            </Tabs>
-                            <TextField label="User Name"></TextField>
-                            <TextField label="Password"></TextField>
-                            <Button onClick={()=>{printData(userName, password)}}>Submit</Button>
-                            <Link href='/'> Forgot password?</Link> 
-                        </CardContent>
+                    <CardHeader title='Welcome Back!' />
+                    <CardContent>
+                        <Tabs
+                            indicatorColor="primary"
+                            textColor="primary">
+                            <Tab label="Login" />
+                            <Link href='/signup'><Tab label="Sign Up" /></Link>
+                        </Tabs>
+                        <TextField label="User Name"></TextField>
+                        <TextField label="Password"></TextField>
+                        <Button onClick={()=>{printData(userName, password)}}>
+                            Submit
+                        </Button>
+                        <Link href='/'> Forgot password?</Link> 
+                    </CardContent>
                 </Card>
             </Paper>
         </div>
