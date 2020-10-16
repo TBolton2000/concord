@@ -28,9 +28,7 @@ export const Login: React.FC<LoginProps> = () => {
                 <Card>
                     <CardHeader title='Welcome Back!' />
                     <CardContent>
-                        <Tabs
-                            indicatorColor="primary"
-                            textColor="primary">
+                        <Tabs indicatorColor="primary" textColor="primary" value={0}>
                             <Tab label="Login" />
                             <Link href='/signup'><Tab label="Sign Up" /></Link>
                         </Tabs>
