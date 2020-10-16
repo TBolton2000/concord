@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
-export const Header: React.FunctionComponent = ({isloggedin, username}) => {
-  isloggedin = true
+export const Header: React.FunctionComponent = (props) => {
+  let isloggedin = false
   const classes = useStyles({});
   if (!isloggedin) {
     return (
