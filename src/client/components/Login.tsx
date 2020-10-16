@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, TextField, Button, CardContent } from "@material-ui/core";
+import { Card, TextField, Button, CardContent, Paper, Tab, Tabs, Link, CardHeader } from "@material-ui/core";
 
 const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
     return (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -21,18 +21,26 @@ export const Login: React.FC<LoginProps> = () => {
             console.log(arg);
         }
     }
-
     return(
         <div>
-            <h3>Login</h3>
-            <Card>
-                <CardContent>
-                    <TextField label="User Name" onChange={onTextFieldUpdate(setUserName)}></TextField>
-                    <Button onClick={()=>{printData(userName, password)}}>
-                        Test
-                    </Button>
-                </CardContent>
-            </Card>
+
+            <Paper square>
+                <Card>
+                    <CardHeader title='Welcome Back!' />
+                    <CardContent>
+                        <Tabs indicatorColor="primary" textColor="primary" value={0}>
+                            <Tab label="Login" />
+                            <Link href='/signup'><Tab label="Sign Up" /></Link>
+                        </Tabs>
+                        <TextField label="User Name"></TextField>
+                        <TextField label="Password"></TextField>
+                        <Button onClick={()=>{printData(userName, password)}}>
+                            Submit
+                        </Button>
+                        <Link href='/'> Forgot password?</Link> 
+                    </CardContent>
+                </Card>
+            </Paper>
         </div>
     );
 }
