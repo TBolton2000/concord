@@ -10,7 +10,7 @@
     "test": "jest",
     "clean": "rimraf dist",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "start": "npm run build && npm run start:prod",
+    "start": "node index.js",
     "start:prod": "cross-env NODE_ENV=production node index.js",
     "type-check-client": "tsc -p ./src/client/tsconfig.json",
     "build-client": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack -p",
@@ -18,7 +18,8 @@
     "dev-client": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server -w",
     "dev-server": "tsc-watch --noClear -b ./src/services/template/tsconfig.json --onSuccess \"node --enable-source-maps index.js\"",
     "dev": "concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run dev-server\" \"npm run dev-client\"",
-    "build": "concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run build-server\" \"npm run build-client\""
+    "build": "concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run build-server\" \"npm run build-client\"",
+    "heroku-postbuild": "npm run build "
   },
   "keywords": [
     "typescript",
@@ -73,9 +74,7 @@
     "express": "^4.17.1",
     "find-up": "^4.1.0",
     "styled-components": "^5.1.0",
-    "tslib": "^1.12.0"
-  },
-  "devDependencies": {
+    "tslib": "^1.12.0",
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
@@ -135,5 +134,8 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0",
     "webpack-manifest-plugin": "^2.2.0"
+  },
+  "devDependencies": {
+    
   }
 }
