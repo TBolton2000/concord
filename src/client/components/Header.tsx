@@ -1,6 +1,6 @@
-import { AppBar, makeStyles, Toolbar, Typography, Button } from '@material-ui/core';
+import { AppBar, makeStyles, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import React from 'react';
+import React, { Fragment } from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -8,48 +8,36 @@ const useStyles = makeStyles((theme: Theme) =>
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
     },
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
     title: {
       flexGrow: 1,
     },
   }),
 );
 
-
-
 export const Header: React.FunctionComponent = (props) => {
   let isloggedin = false
   const classes = useStyles({});
-  if (!isloggedin) {
     return (
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Concord
           </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Sign up</Button>
+          <div>
+            {isloggedin
+              ? [
+                  <IconButton color="inherit"><SettingsIcon color="inherit"/></IconButton>,
+                  <Fragment>username</Fragment>
+                ]
+              : [
+                  <Button color="inherit" href="/login">Login</Button>, 
+                  <Button color="inherit" href="/signup">Sign up</Button>
+                ] 
+            }
+          </div>
         </Toolbar>
       </AppBar>
     );
-  }
-  
-  return (
-    <AppBar position='fixed' className={classes.appBar}>
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          Concord
-        </Typography>
-        <Button color="inherit"><SettingsIcon color="inherit"/></Button>
-        <Button color="inherit">username</Button>
-      </Toolbar>
-    </AppBar>
-  );
 
 };
 
