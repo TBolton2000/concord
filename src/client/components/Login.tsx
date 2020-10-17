@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, TextField, Button, CardContent, Paper, Tab, Tabs, Link, CardHeader } from "@material-ui/core";
+import { TextField, Button, Paper, Tab, Tabs, Link, Grid } from "@material-ui/core";
 
 const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
     return (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -23,23 +23,34 @@ export const Login: React.FC<LoginProps> = () => {
     }
     return(
         <div>
-
-            <Paper square>
-                <Card>
-                    <CardHeader title='Welcome Back!' />
-                    <CardContent>
-                        <Tabs indicatorColor="primary" textColor="primary" value={0}>
+            <Paper style={{
+                maxWidth: "500px",
+                margin: "auto"
+            }}>
+                <Grid container direction="column" alignContent="center" alignItems="center" spacing={1}>
+                    <Grid xs={12} item>
+                        <Tabs indicatorColor="primary" textColor="primary" variant="fullWidth" value={0}>
                             <Tab label="Login" />
-                            <Link href='/signup'><Tab label="Sign Up" /></Link>
+                            <Tab label="Sign Up" href="/signup"/>
                         </Tabs>
-                        <TextField label="User Name"></TextField>
-                        <TextField label="Password"></TextField>
-                        <Button onClick={()=>{printData(userName, password)}}>
-                            Submit
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Username" autoFocus fullWidth onChange={onTextFieldUpdate(setUserName)}></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Password" autoFocus fullWidth onChange={onTextFieldUpdate(setPassword)}></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <Button variant="contained" onClick={()=>{printData(userName, password)}}>
+                            Login
                         </Button>
-                        <Link href='/'> Forgot password?</Link> 
-                    </CardContent>
-                </Card>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <Link href='/'> 
+                            Forgot password?
+                        </Link> 
+                    </Grid>
+                </Grid>
             </Paper>
         </div>
     );
