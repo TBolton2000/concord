@@ -15,13 +15,16 @@ export const SignUp: React.FC<SignUpProps> = () => {
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const [email, setEmail] = useState("");
     const [confirmedEmail, setConfirmedEmail] = useState("");
+    
     const areSame = (confirmed: string, regular: string) => {
         return confirmed == regular || confirmed === "";
     }
+    
     const properEmail = () => {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase()) || email === "";
     }
+    
     const properPassword = () => {
         return ((password.length > 9 && password.length < 255) || password.length == 0); 
     }
@@ -72,5 +75,5 @@ export const SignUp: React.FC<SignUpProps> = () => {
                 </Grid>
             </Paper>
         </div>
-    )
+    );
 }
