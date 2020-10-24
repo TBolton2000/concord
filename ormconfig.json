@@ -1,0 +1,17 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "postgres",
+    "database": "concord-db",
+    "synchronize": true,
+    "entities": ["dist/services/template/entity/**/*.js"],
+    "migrations": ["dist/services/template/migrations/*.js"],
+    "subscribers": ["dist/services/template/subscriber/**/*.js"],
+    "cli": {
+        "entitiesDir": "src/services/template/entity",
+        "migrationsDir": "src/services/template/migrations",
+        "subscribersDir": "src/services/template/subscriber"
+    }
+  }
