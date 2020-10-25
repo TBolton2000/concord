@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { TextField, Button, Paper, Tab, Tabs, Link, Grid } from "@material-ui/core";
+import { RouteComponentProps } from "react-router-dom";
+import { MeDocument, MeQuery, useLoginMutation } from "../generated/graphql";
+import { setAccessToken } from "./accessToken";
 
 const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
     return (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -7,13 +10,10 @@ const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string
     };
 }
 
-interface LoginProps{
-
-}
-
-export const Login: React.FC<LoginProps> = () => {
-    const [userName, setUserName] = useState("");
+export const Login: React.FC<RouteComponentProps> = ({history}) => {
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [login] = useLoginMutation()
 
     const printData = (...args) => {
         for(let arg of args)
@@ -21,6 +21,33 @@ export const Login: React.FC<LoginProps> = () => {
             console.log(arg);
         }
     }
+
+    const submitForm = async () => {
+        const response = await login({
+            variables: {
+                email,
+                password
+            },
+            update: (store, {data}) => {
+                if (!data) {
+                    return null;
+                }
+                store.writeQuery<MeQuery>({
+                    query: MeDocument,
+                    data: {
+                        me: data.login.user
+                    }
+                })
+            }
+        })
+
+        console.log(response);
+        if (response && response.data) {
+            setAccessToken(response.data.login.accessToken);
+            history.push("/");
+        }
+    }
+
     return(
         <div>
             <Paper style={{
@@ -35,13 +62,13 @@ export const Login: React.FC<LoginProps> = () => {
                         </Tabs>
                     </Grid>
                     <Grid xs={12} item>
-                        <TextField label="Username" autoFocus fullWidth onChange={onTextFieldUpdate(setUserName)}></TextField>
+                        <TextField label="Email" autoFocus value={email} onChange={onTextFieldUpdate(setEmail)}></TextField>
                     </Grid>
                     <Grid xs={12} item>
-                        <TextField label="Password" autoFocus fullWidth onChange={onTextFieldUpdate(setPassword)}></TextField>
+                        <TextField label="Password" value={password} onChange={onTextFieldUpdate(setPassword)} type="password"></TextField>
                     </Grid>
                     <Grid xs={12} item>
-                        <Button variant="contained" onClick={()=>{printData(userName, password)}}>
+                        <Button variant="contained" onClick={submitForm}>
                             Login
                         </Button>
                     </Grid>
