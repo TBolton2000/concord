@@ -7,7 +7,7 @@ import { apiRouter } from './routes/api-router';
 import { pagesRouter } from './routes/pages-router';
 import { staticsRouter } from './routes/statics-router';
 import { buildSchema } from "type-graphql";
-import { UserResolver } from "./resolvers";
+import { UserResolver } from "./UserResolvers";
 import * as config from './config';
 import { createConnection } from 'typeorm';
 import cookieParser from "cookie-parser";
