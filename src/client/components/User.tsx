@@ -4,18 +4,20 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { IUserDTO } from '../../shared/IUserDTO';
-import { getUserFullName } from '../../shared/utils';
 
 interface IProps {
   user: IUserDTO;
 }
 
-export const User: React.FunctionComponent<IProps> = ({ user }) => (
-  <Card>
-    <CardHeader title={`User: ${getUserFullName(user)}`} />
-    <CardContent>
-      <Typography>Id: {user.userId}</Typography>
-      <Typography>Image Url: {user.imageUrl}</Typography>
-    </CardContent>
-  </Card>
-);
+export const User: React.FunctionComponent<IProps> = ({ user }) => {
+  return(
+    <Card>
+        <CardHeader title={`User: ${(user.name)}`} />
+        <CardContent>
+            <Typography>Id: {user.id}</Typography>
+            <Typography>Name: {user.name}</Typography>
+            <Typography>Email: {user.email}</Typography>
+        </CardContent>
+    </Card>
+  )
+};

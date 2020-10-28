@@ -4,7 +4,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import { useHelloQuery } from '../generated/graphql';
 
 const useStyles = makeStyles(() => ({
   LogoImg: {
@@ -14,7 +13,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const Home: React.FunctionComponent = () => {
-  const { data, loading } = useHelloQuery();
 
   const classes = useStyles({});
   return (
@@ -32,9 +30,6 @@ export const Home: React.FunctionComponent = () => {
               medium blog post
             </a>
             .
-          </Typography>
-          <Typography>
-            {loading || !data ? "Loading" : data.hello }
           </Typography>
         </CardContent>
       </Card>

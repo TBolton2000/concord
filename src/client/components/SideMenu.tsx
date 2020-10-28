@@ -1,6 +1,5 @@
 import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import UsageIcon from '@material-ui/icons/Code';
 import HomeIcon from '@material-ui/icons/Home';
 import RouterIcon from '@material-ui/icons/Storage';
 import FetchIcon from '@material-ui/icons/CloudDownload';
@@ -49,38 +48,14 @@ export const SideMenu: React.FunctionComponent = () => {
           </ListItemIcon>
           <ListItemText primary='Home' />
         </ListItem>
-        <ListItem button component={NavLinkMui} to='/usage'>
-          <ListItemIcon>
-            <UsageIcon />
-          </ListItemIcon>
-          <ListItemText primary='Usage' />
-        </ListItem>
       </List>
       <Divider />
       <List>
-        <ListItem button component={NavLinkMui} to='/fetch-example'>
+        <ListItem button component={NavLinkMui} to='/users-list'>
           <ListItemIcon>
             <FetchIcon />
           </ListItemIcon>
-          <ListItemText primary='Fetch' />
-        </ListItem>
-        <ListItem button component={NavLinkMui} to='/lazy-example'>
-          <ListItemIcon>
-            <LazyIcon />
-          </ListItemIcon>
-          <ListItemText primary='Lazy Loading' />
-        </ListItem>
-        <ListItem button component={NavLinkMui} to='/styled-example'>
-          <ListItemIcon>
-            <StyledIcon />
-          </ListItemIcon>
-          <ListItemText primary='Styled Components' />
-        </ListItem>
-        <ListItem button component={NavLinkMui} to='/router-example/1234'>
-          <ListItemIcon>
-            <RouterIcon />
-          </ListItemIcon>
-          <ListItemText primary='React-Router' />
+          <ListItemText primary='Users List' />
         </ListItem>
       </List>
       <Divider/>
