@@ -2,6 +2,8 @@ import { AppBar, makeStyles, Toolbar, Typography, Button, IconButton } from '@ma
 import { createStyles, Theme } from '@material-ui/core/styles';
 import React, { Fragment } from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { useLogoutMutation, useMeQuery } from '../generated/graphql';
+import { setAccessToken } from './accessToken';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,7 +17,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Header: React.FunctionComponent = (props) => {
-  let isloggedin = false
+  const {data, loading} = useMeQuery();
+  const [logout, {client}] = useLogoutMutation();
+  const isLoggedIn = data && data.me;
+
+  const logOutUser = async () => {
+    await logout();
+    setAccessToken("");
+    await client.resetStore();
+  }
+
   const classes = useStyles({});
     return (
       <AppBar position='fixed' className={classes.appBar}>
@@ -24,15 +35,18 @@ export const Header: React.FunctionComponent = (props) => {
             Concord
           </Typography>
           <div>
-            {isloggedin
-              ? [
-                  <IconButton color="inherit"><SettingsIcon color="inherit"/></IconButton>,
-                  <Fragment>username</Fragment>
-                ]
-              : [
-                  <Button color="inherit" href="/login">Login</Button>, 
-                  <Button color="inherit" href="/signup">Sign up</Button>
-                ] 
+            {loading
+            ? null :
+              isLoggedIn
+                ? [
+                    <IconButton color="inherit"><SettingsIcon color="inherit"/></IconButton>,
+                    <Fragment>{data.me.email}</Fragment>,
+                    <Button onClick={logOutUser}>Log Out</Button>
+                  ]
+                : [
+                    <Button color="inherit" href="/login">Login</Button>, 
+                    <Button color="inherit" href="/signup">Sign up</Button>
+                  ] 
             }
           </div>
         </Toolbar>

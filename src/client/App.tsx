@@ -1,6 +1,6 @@
 import { CssBaseline, makeStyles } from '@material-ui/core';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'; // Pages
 import { Header } from './components/Header';
 import { SideMenu } from './components/SideMenu';
@@ -14,6 +14,7 @@ import { Login } from './components/Login';
 import { SignUp } from './components/Signup';
 import { DashboardCalendar } from './components/DashboardCalendar';
 import { DashboardAllEvents } from './components/DashboardAllEvents';
+import { setAccessToken } from './components/accessToken';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,6 +31,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const App = () => {
   const classes = useStyles({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/refresh_token", {
+      method: "POST",
+      credentials: "include"
+    }).then(async x => {
+      const { accessToken } = await x.json();
+      setAccessToken(accessToken);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading)
+    return <div>Loading... now...</div>
 
   return (
     <BrowserRouter>
