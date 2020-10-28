@@ -22,7 +22,7 @@ module.exports = {
     "username": username,
     "password": password,
     "database": database,
-    "synchronize": false,
+    "synchronize": true,
     "entities": ["dist/services/template/entity/**/*.js"],
     "migrations": ["dist/services/template/migrations/*.js"],
     "subscribers": ["dist/services/template/subscriber/**/*.js"],
