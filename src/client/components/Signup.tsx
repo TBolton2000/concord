@@ -8,9 +8,8 @@ const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string
         toUpdate(e.target.value);
     };
 }
-interface SignUpProps{
-}
-export const SignUp: React.FC<SignUpProps|RouteComponentProps> = () => {
+
+export const SignUp: React.FC<RouteComponentProps> = ({history}) => {
 
     const [name, setName] = useState("");
     const [userName, setUserName] = useState("");
@@ -45,15 +44,16 @@ export const SignUp: React.FC<SignUpProps|RouteComponentProps> = () => {
         if (!(email === confirmedEmail && password === confirmedPassword && properEmail() && properPassword())) {
             // Reject, don't even try to register
             console.log("Info does not fit formatting");
+            return;
         }
         const response = await signup({
             variables: {
+                name,
                 email,
                 password
             }
         })
-
-        console.log(response);
+        history.push("/")
     }
 
     return(
@@ -70,22 +70,19 @@ export const SignUp: React.FC<SignUpProps|RouteComponentProps> = () => {
                         </Tabs>
                     </Grid>
                     <Grid xs={12} item>
-                        <TextField label="Name" autoFocus onChange={onTextFieldUpdate(setName)}></TextField>
-                    </Grid>
-                    {/* <Grid xs={12} item>
-                        <TextField label="Username" fullWidth onChange={onTextFieldUpdate(setUserName)}></TextField>
-                    </Grid> */}
-                    <Grid xs={12} item>
-                        <TextField label="Email" onChange={onTextFieldUpdate(setEmail)} helperText={!properEmail() ?  'Email is Invalid' : ''} error={!properEmail()}></TextField>
+                        <TextField label="Name" autoFocus value={name} onChange={onTextFieldUpdate(setName)}></TextField>
                     </Grid>
                     <Grid xs={12} item>
-                        <TextField label="Confirm Email" onChange={onTextFieldUpdate(setConfirmedEmail)} helperText={!areSame(confirmedEmail, email) ? 'Emails do not match' : ''} error={!areSame(confirmedEmail, email)}></TextField>
+                        <TextField label="Email" value={email} onChange={onTextFieldUpdate(setEmail)} helperText={!properEmail() ?  'Email is Invalid' : ''} error={!properEmail()}></TextField>
                     </Grid>
                     <Grid xs={12} item>
-                        <TextField label="Password" onChange={onTextFieldUpdate(setPassword)} helperText={!properPassword() ? 'Password must be between 9 and 255 characters' : ''} error={!properPassword()} type="password"></TextField>
+                        <TextField label="Confirm Email" value={confirmedEmail} onChange={onTextFieldUpdate(setConfirmedEmail)} helperText={!areSame(confirmedEmail, email) ? 'Emails do not match' : ''} error={!areSame(confirmedEmail, email)}></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Password" value={password} onChange={onTextFieldUpdate(setPassword)} helperText={!properPassword() ? 'Password must be between 9 and 255 characters' : ''} error={!properPassword()} type="password"></TextField>
                     </Grid>
                     <Grid xs={12} item >
-                        <TextField label="Confirm Password" onChange={onTextFieldUpdate(setConfirmedPassword)} helperText={!areSame(confirmedPassword, password) ? 'Passwords do not match' : ''} error={!areSame(confirmedPassword, password)} type="password"></TextField>
+                        <TextField label="Confirm Password" value={confirmedPassword} onChange={onTextFieldUpdate(setConfirmedPassword)} helperText={!areSame(confirmedPassword, password) ? 'Passwords do not match' : ''} error={!areSame(confirmedPassword, password)} type="password"></TextField>
                     </Grid>
                     <Grid xs={12} item>
                         <Button variant="contained" onClick={submitForm}>

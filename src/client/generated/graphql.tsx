@@ -49,6 +49,7 @@ export type MutationLoginArgs = {
 export type MutationRegisterArgs = {
   password: Scalars['String'];
   email: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type LoginResponse = {
@@ -78,7 +79,7 @@ export type LoginMutation = (
     & Pick<LoginResponse, 'accessToken'>
     & { user: (
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'email'>
+      & Pick<User, 'name' | 'id' | 'email'>
     ) }
   ) }
 );
@@ -98,11 +99,12 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email'>
+    & Pick<User, 'id' | 'name' | 'email'>
   )> }
 );
 
 export type RegisterMutationVariables = Exact<{
+  name: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
@@ -149,6 +151,7 @@ export const LoginDocument = gql`
   login(email: $email, password: $password) {
     accessToken
     user {
+      name
       id
       email
     }
@@ -214,6 +217,7 @@ export const MeDocument = gql`
     query Me {
   me {
     id
+    name
     email
   }
 }
@@ -244,8 +248,8 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const RegisterDocument = gql`
-    mutation Register($email: String!, $password: String!) {
-  register(email: $email, password: $password)
+    mutation Register($name: String!, $email: String!, $password: String!) {
+  register(name: $name, email: $email, password: $password)
 }
     `;
 export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
@@ -263,6 +267,7 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  * @example
  * const [registerMutation, { data, loading, error }] = useRegisterMutation({
  *   variables: {
+ *      name: // value for 'name'
  *      email: // value for 'email'
  *      password: // value for 'password'
  *   },

@@ -88,7 +88,7 @@ export class UserResolver {
         const valid = await compare(password, user.password);
 
         if (!valid) {
-            throw new Error("bad password");
+            throw new Error("Password is not valid");
         }
 
         // Login successful
@@ -102,13 +102,25 @@ export class UserResolver {
 
     @Mutation(() => Boolean)
     async register(
+        @Arg("name") name: string,
         @Arg("email") email: string,
         @Arg("password") password: string
     ) {
+        // check that email is unique
+        if (password.length < 8 || password.length > 30) {
+            throw new Error("Password is not between 8 and 30 characters, inclusive");
+        }
+
+        const existing = await User.findOne( { where: { email } } );
+        if (existing) {
+            throw new Error("Account already exists for this email");
+        }
+
         const hashedPassword = await hash(password, 12);
 
         try {
             await User.insert({
+                name,
                 email,
                 password: hashedPassword
             })
