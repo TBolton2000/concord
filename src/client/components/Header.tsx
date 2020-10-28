@@ -39,13 +39,13 @@ export const Header: React.FunctionComponent = (props) => {
             ? null :
               isLoggedIn
                 ? [
-                    <IconButton color="inherit"><SettingsIcon color="inherit"/></IconButton>,
-                    <Fragment>{data.me.email}</Fragment>,
-                    <Button onClick={logOutUser}>Log Out</Button>
+                    <IconButton color="inherit" key={0}><SettingsIcon color="inherit"/></IconButton>,
+                    <Fragment key={1}>{data.me.name}</Fragment>,
+                    <Button onClick={logOutUser} key={2}>Log Out</Button>
                   ]
                 : [
-                    <Button color="inherit" href="/login">Login</Button>, 
-                    <Button color="inherit" href="/signup">Sign up</Button>
+                    <Button color="inherit" href="/login" key={0}>Login</Button>, 
+                    <Button color="inherit" href="/signup" key={1}>Sign up</Button>
                   ] 
             }
           </div>
