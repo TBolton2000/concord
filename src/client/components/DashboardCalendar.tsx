@@ -4,6 +4,8 @@ import moment from "moment"
 import { Card, CardContent } from "@material-ui/core";
 import { Calendar, momentLocalizer, View, DateLocalizer } from "react-big-calendar"
 
+import { TransitionsModal } from "./Modals"
+
 import * as dates from "../../../node_modules/react-big-calendar/lib/utils/dates"
 
 import "!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css"
@@ -58,61 +60,69 @@ class CalendarEvent {
 
 function SelectableCalendar ({ localizer }: Props) {
     const [events, setEvents] = useState([{allDay:true, title: "Today"}] as CalendarEvent[]);
+    const [modalOpen, setModalOpen] = useState(false)
+
 
     // prompting user for new event
     const handleSelect = ({ start, end }) => {
-        const title = window.prompt('New Event name')
 
-        // If the title of event exists then, create the event
-        if (title) {
-            let newEvent = {} as CalendarEvent;
-            newEvent.start = moment(start).toDate();
+        setModalOpen(true);
+    //     const title = window.prompt('New Event name')
+    //     // If the title of event exists then, create the event
+    //     if (title) {
 
-            // TODO :: Fix 'All Day' Agenda for All day events
-            newEvent.end = moment(end).add(1, "seconds").toDate();
-            newEvent.title = title;
+    //         // let newEvent: CalendarEvent = {
+    //         //     start: moment(start).toDate()
+    //         //     end: moment(end).add(1, "seconds").toDate()
+    //         //     title = title
+    //         //     }
 
-            // Tracking previous events
-            setEvents([
-              ...events,
-              newEvent
-            ])
-        }
+    //         let newEvent = {} as CalendarEvent;
+    //         newEvent.start = moment(start).toDate();
+
+    //         // TODO :: Fix 'All Day' Agenda for All day events
+    //         newEvent.end = moment(end).add(1, "seconds").toDate();
+    //         newEvent.title = title;
+
+    //         // Tracking previous events
+    //         setEvents([
+    //           ...events,
+    //           newEvent
+    //         ])
+    //     }
       }
 
-    // Returning calaendar state and events
+    // Returning calendar state and events
     return (
-      <>
-        <Calendar
-          selectable
-          localizer={localizer}
-          events={events}
-          defaultView='month'
-          views={allViews}
-          max={dates.add(dates.endOf(new Date(2015, 17, 1), 'day'), -1, 'hours')}
-          onSelectEvent={event => alert(event.title)}
-          onSelectSlot={handleSelect}
-          startAccessor='start'
-          endAccessor='end'
-          titleAccessor='title'
-        />
-      </>
+        // <div>
+        <>
+            <Calendar
+            selectable
+            localizer={localizer}
+            events={events}
+            defaultView='month'
+            views={allViews}
+            max={dates.add(dates.endOf(new Date(2015, 17, 1), 'day'), -1, 'hours')}
+            onSelectEvent={event => alert(event.title)}
+            onSelectSlot={handleSelect}
+            startAccessor='start'
+            endAccessor='end'
+            titleAccessor='title'
+            />
+            <TransitionsModal
+            open={modalOpen}
+            setOpen={setModalOpen}
+            />
+        </>
+        /* </div> */
     )
-  }
-
-// export live bindings to functions, objects, or primitive values from the module so they can be used by other programs with the import statement
-export default function Availability() {
-    return (
-      <div style={{ height: "100vh" }}>
-        <SelectableCalendar localizer={localizer} />
-      </div>
-    );
   }
 
 
 interface DashboardCalendarProps{
 
 }
+
 
 export const DashboardCalendar: React.FC<DashboardCalendarProps> = () => {
 
@@ -130,3 +140,4 @@ export const DashboardCalendar: React.FC<DashboardCalendarProps> = () => {
         </div>
     );
 }
+
