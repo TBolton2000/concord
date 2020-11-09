@@ -8,11 +8,13 @@ import { pagesRouter } from './routes/pages-router';
 import { staticsRouter } from './routes/statics-router';
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./UserResolvers";
+import { EventResolver } from "./EventResolvers";
 import * as config from './config';
 import { createConnection } from 'typeorm';
 import cookieParser from "cookie-parser";
 import { verify } from 'jsonwebtoken';
 import { User } from './entity/User';
+import { Event } from './entity/Event';
 import { createAccessToken, createRefreshToken } from './auth';
 import { sendRefreshToken } from './sendRefreshToken';
 
@@ -31,7 +33,7 @@ console.log(`*******************************************`);
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [UserResolver]
+            resolvers: [UserResolver, EventResolver]
         }),
         context: ({ req, res }) => ( {req, res} )
     });
