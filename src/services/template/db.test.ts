@@ -1,6 +1,30 @@
-import { getUserById } from './db';
+const { createTestClient } = require('apollo-server-testing');
 
-test('testing user id', () => {
-  expect(getUserById('1').firstName).toBe('Gil');
-  expect(getUserById('1').lastName).toBe('Amran');
+it('fetches single launch', async () => {
+  const userAPI = new UserAPI({ store });
+  const launchAPI = new LaunchAPI();
+
+  // create a test server to test against, using our production typeDefs,
+  // resolvers, and dataSources.
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    dataSources: () => ({ userAPI, launchAPI }),
+    context: () => ({ user: { name: 'Shilleh', email: 'shilleh@gmail.com', id: '1' } }),
+  });
+
+  // mock the dataSource's underlying fetch methods
+  launchAPI.get = jest.fn(() => [mockLaunchResponse]);
+  userAPI.store = mockStore;
+  userAPI.store.trips.findAll.mockReturnValueOnce([
+    { dataValues: { launchId: 1 } },
+  ]);
+
+  // use the test server to create a query function
+  const { query } = createTestClient(server);
+
+  // run query against the server and snapshot the output
+  const res = await query({ query: GET_LAUNCH, variables: { id: 1 } });
+  expect(res).toMatchSnapshot();
 });
+
