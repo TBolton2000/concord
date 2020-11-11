@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, Length } from 'class-validator';
 import { Field, Int, ObjectType } from 'type-graphql';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Unique, OneToMany, ManyToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Unique, OneToMany, ManyToMany, JoinTable} from "typeorm";
 import { Event } from './Event';
 
 @ObjectType()
@@ -35,5 +35,6 @@ export class User extends BaseEntity {
     ownedEvents: Event[];
 
     @ManyToMany(()=>Event, event => event.participants)
+    @JoinTable()
     events: Event[];
 }

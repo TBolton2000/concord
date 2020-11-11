@@ -1,7 +1,7 @@
 import { Arg, Ctx, Field, Int, Mutation, ObjectType, Query, Resolver, UseMiddleware } from "type-graphql";
 import { hash, compare } from "bcryptjs";
 import { User } from './entity/User';
-import { Event } from './Entity/Event';
+import { Event } from './entity/Event';
 import { createAccessToken, createRefreshToken } from './auth';
 import { MyContext } from './MyContext';
 import { isAuth } from './isAuth';
@@ -93,27 +93,21 @@ export class EventResolver {
     return true
 }
 
-// @Mutation(() => Boolean)
-//     async delete(
-//         @Arg("title") title: string,
-//         @Arg("time") time: string,
-//         @Arg("description") description: string,
-//         @Arg("videoChatLink") link: string
-//     ) 
+@Mutation(() => Boolean)
+    async delete(
+        @Arg("id") id: string
+    ) 
     
-//     {
-//       try {
-//          await Event.remove({
-//              title,
-//              time,
-//              description,
-//              videoChatLink:link
-//          })
-//      } catch (error) {
-//          console.log(error);
-//          return false;
-//      }
-//     return true
-// }
+    {
+      try {
+         const event = await Event.findOne(id);
+         if(event) { Event.remove(event);} else {console.log("Event does not exist");}
+      
+     } catch (error) {
+         console.log(error);
+         return false;
+     }
+    return true
+}
 
 }
