@@ -12,11 +12,6 @@ import { EventResolver } from "./EventResolvers";
 import * as config from './config';
 import { createConnection } from 'typeorm';
 import cookieParser from "cookie-parser";
-import { verify } from 'jsonwebtoken';
-import { User } from './entity/User';
-import { Event } from './entity/Event';
-import { createAccessToken, createRefreshToken } from './auth';
-import { sendRefreshToken } from './sendRefreshToken';
 
 console.log(`*******************************************`);
 console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
