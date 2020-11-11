@@ -21,7 +21,7 @@ class NewEvent {
 export class EventResolver {
     @Query(()=>String)
     One() { 
-        return "test2";
+        return "hello";
     }
     
     @Query(()=>String)
@@ -29,44 +29,13 @@ export class EventResolver {
     bye(
         @Ctx() {payload}: MyContext
     ) {
-        return `done!, ${payload.userId}`;
+        return `bye, ${payload.userId}`;
     }
 
     @Query(()=> [Event])
     events() {
         return Event.find();
     }
-
-    
-   //  @Mutation(() => NewEvent)
-   //  async login(
-   //      @Arg("title") title: string,
-   //      @Arg("time") time: string,
-   //      @Ctx() {req, res}: MyContext
-   //  ): Promise<NewEvent> {
-        
-   //      const event = await Event.findOne();
-
-   //      if (!event) {
-   //          throw new Error("User not found");
-   //      }
-
-   //      const valid = await compare(password, user.password);
-
-   //      if (!valid) {
-   //          throw new Error("Password is not valid");
-   //      }
-
-   //      // Login successful
-   //      sendRefreshToken(res, createRefreshToken(user));
-
-   //      return {
-   //          accessToken: createAccessToken(user),
-   //          user
-   //      };
-   //  }
-    
-    
     
     @Mutation(() => Boolean)
     async add(
@@ -75,7 +44,6 @@ export class EventResolver {
         @Arg("description") description: string,
         @Arg("videoChatLink") link: string
     ) 
-    
     {
       try {
          await Event.insert({
@@ -89,15 +57,13 @@ export class EventResolver {
          return false;
      }
 
-
     return true
-}
+   }
 
 @Mutation(() => Boolean)
     async delete(
         @Arg("id") id: string
     ) 
-    
     {
       try {
          const event = await Event.findOne(id);
@@ -109,5 +75,21 @@ export class EventResolver {
      }
     return true
 }
+
+@Mutation(() => Boolean)
+    async edit(
+        @Arg("id") id: string
+    ) 
+    { 
+      try {
+         const event = await Event.findOne(id)
+         await Event.update(id, {title: 'updated name'})
+         
+     } catch (error) {
+         console.log(error);
+         return false;
+     }
+    return true
+   }
 
 }
