@@ -18,12 +18,7 @@ export class UpdateEventInfo {
 }
 
 @Resolver()
-export class EventResolver {
-    @Query(()=>String)
-    One() { 
-        return "hello";
-    }
-    
+export class EventResolver {    
     @Query(()=> [Event])
     events() {
         return Event.find();
