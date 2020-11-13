@@ -1,9 +1,9 @@
-import { Field, Int } from 'type-graphql';
 import { BaseEntity, Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './User';
+import { Field, Int, ObjectType } from 'type-graphql';
 
-
-@Entity()
+@ObjectType()
+@Entity("events")
 export class Event extends BaseEntity {
     @Field(() => Int)
     @PrimaryGeneratedColumn()
@@ -11,7 +11,11 @@ export class Event extends BaseEntity {
 
     @Field()
     @Column("text")
-    name: string;
+    title: string;
+
+    @Field()
+    @Column("timestamp")
+    time: string;
 
     @Field()
     @Column("text")
@@ -26,4 +30,5 @@ export class Event extends BaseEntity {
 
     @ManyToMany(()=>User, user => user.events)
     participants: User[];
+ 
 }
