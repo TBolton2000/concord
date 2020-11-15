@@ -14,6 +14,5 @@ createConnection().then(async (connection) => {
         userRepository.save(user);
     }
     
-
 }).catch((error) => console.log(error));
 
