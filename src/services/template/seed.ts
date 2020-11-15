@@ -36,9 +36,9 @@ createConnection().then(async (connection) => {
     userRepository.save(userFive);
 
     const userSix = new User();
-    userSix.name = 'Shillaces';
-    userSix.email = 'Shillaces@gmail.com';
-    userSix.password = 'Shillaces@gmail.com';
+    userSix.name = 'Faris Shatat';
+    userSix.email = 'Shatat@gmail.com';
+    userSix.password = 'Shatat@gmail.com';
     userRepository.save(userSix);
 
     const userSeven = new User();
