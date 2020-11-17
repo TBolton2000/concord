@@ -1,11 +1,16 @@
 import path from 'path';
-import { Configuration } from 'webpack';
+import { Configuration, ProvidePlugin } from 'webpack';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import cssnano from 'cssnano';
 
 import { SERVER_PORT, IS_DEV, WEBPACK_PORT } from './src/services/template/config';
 
-const plugins = [new ManifestPlugin()];
+const plugins = [new ManifestPlugin(), new ProvidePlugin({
+  React: 'react',
+  ReactDOM: 'react-dom',
+  $: 'jquery',
+  jQuery: 'jquery'
+})];
 
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 // plugins.push(new BundleAnalyzerPlugin());

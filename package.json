@@ -140,6 +140,7 @@
     "puppeteer": "^5.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-golden-layout": "^1.0.6",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "request": "^2.88.2",
