@@ -6,6 +6,7 @@ import async from "async";
 import { User } from "../services/template/entity/user";
 import nodemailer from "nodemailer";
 
+
 const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
     return (e : React.ChangeEvent<HTMLInputElement>) => {
         toUpdate(e.target.value);
