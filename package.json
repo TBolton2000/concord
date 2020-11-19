@@ -73,6 +73,7 @@
     "express": "^4.17.1",
     "find-up": "^4.1.0",
     "moment": "^2.29.1",
+    "postgresql": "0.0.1",
     "react-big-calendar": "^0.28.1",
     "react-tackle-box": "^2.1.0",
     "styled-components": "^5.1.0",

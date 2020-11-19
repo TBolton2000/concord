@@ -60,37 +60,46 @@ class CalendarEvent {
 
 function SelectableCalendar ({ localizer }: Props) {
     const [events, setEvents] = useState([{allDay:true, title: "Today"}] as CalendarEvent[]);
-    const [modalOpen, setModalOpen] = useState(false)
-
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalInputs, setModalInputs] = useState([]);
 
     // prompting user for new event
     const handleSelect = ({ start, end }) => {
 
         setModalOpen(true);
-    //     const title = window.prompt('New Event name')
-    //     // If the title of event exists then, create the event
-    //     if (title) {
+        setModalInputs([ 
+            moment(start).format("yyyy-MM-DD"), 
+            moment(start).format("HH:mm"), 
+            moment(end).format("yyyy-MM-DD"),
+            moment(end).format("HH:mm")
+        ]);
 
-    //         // let newEvent: CalendarEvent = {
-    //         //     start: moment(start).toDate()
-    //         //     end: moment(end).add(1, "seconds").toDate()
-    //         //     title = title
-    //         //     }
+        //const title = window.prompt('New Event name')
+        //If the title of event exists then, create the event
+        // if (title) {
 
-    //         let newEvent = {} as CalendarEvent;
-    //         newEvent.start = moment(start).toDate();
+        //     let newEvent = {
+        //         start: moment(start).toDate(),
+        //         end: moment(end).add(1, "seconds").toDate(),
+        //         title: title
+        //         } as CalendarEvent;
 
-    //         // TODO :: Fix 'All Day' Agenda for All day events
-    //         newEvent.end = moment(end).add(1, "seconds").toDate();
-    //         newEvent.title = title;
-
-    //         // Tracking previous events
-    //         setEvents([
-    //           ...events,
-    //           newEvent
-    //         ])
-    //     }
-      }
+            
+        //     // Tracking previous events
+        //     setEvents([
+        //       ...events,
+        //       newEvent
+        //     ])
+        // }
+        
+        // Modal.result.then((result) => {
+        //     if (result) {
+        //     console.log(result);
+        //     }
+        //     });
+      
+      
+        }
 
     // Returning calendar state and events
     return (
@@ -112,10 +121,12 @@ function SelectableCalendar ({ localizer }: Props) {
             <TransitionsModal
             open={modalOpen}
             setOpen={setModalOpen}
+            inputValues={modalInputs}
             />
         </>
         /* </div> */
     )
+    //return;
   }
 
 
