@@ -152,8 +152,7 @@ export class UserResolver {
         @Arg("oldPassword") oldPassword: string,
         @Arg("newPassword") newPassword: string,
         @Ctx() {payload}: MyContext
-    ) 
-    {  
+    ) {  
       try {
         const user = await User.findOne(payload.userId)
         const valid = await compare(oldPassword, user.password)

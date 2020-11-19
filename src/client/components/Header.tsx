@@ -22,8 +22,6 @@ const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string
   };
 }
 
-
-
 export const Header: React.FunctionComponent = (props) => {
   const {data, loading} = useMeQuery();
   const [logout, {client}] = useLogoutMutation();
@@ -33,7 +31,14 @@ export const Header: React.FunctionComponent = (props) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  
+
+  const areSame = (confirmed: string, regular: string) => {
+    return confirmed == regular || confirmed === "";
+  }
+
+  const properPassword = () => {
+    return ((newPassword.length > 9 && newPassword.length < 255) || newPassword.length == 0); 
+  }
 
   const logOutUser = async () => {
     await logout();
@@ -64,15 +69,17 @@ export const Header: React.FunctionComponent = (props) => {
                     <IconButton color="inherit" key={0} onClick={() => setOpen(true)}><SettingsIcon color="inherit" /></IconButton>,
                     <Fragment key={1}>{data.me.name}</Fragment>,
                     <Button onClick={logOutUser} key={2}>Log Out</Button>,
-                    <Modal open={open} style={{
+                    <Modal open={open} onClose={()=> setOpen(false)} key={3} style={{
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      
                     }}>
                       <Paper style={{
                         minWidth: "500px",
                         maxWidth: "800px",
-                        margin: "auto"
+                        margin: "auto",
+                        padding: "10px"
                         }}>
                         <Grid container direction="column" alignContent="center" alignItems="center" spacing={1}>
                           <Grid xs={12} item>
@@ -81,10 +88,10 @@ export const Header: React.FunctionComponent = (props) => {
                           <Grid xs={12} item>
                             Email: {data.me.email}
                           </Grid>
-                            Edit Password:
-                            <TextField id="old-password" label="Enter Old Password" autoFocus value={oldPassword} onChange={onTextFieldUpdate(setOldPassword)}></TextField>
-                            <TextField id="new-password" label="Enter New Password" autoFocus value={newPassword} onChange={onTextFieldUpdate(setNewPassword)}></TextField>
-                            <TextField id="confirm-password" label="Confirm Password" autoFocus value={confirmPassword} onChange={onTextFieldUpdate(setConfirmPassword)}></TextField>
+                            Change Password:
+                            <TextField id="old-password" label="Enter Old Password" autoFocus value={oldPassword} onChange={onTextFieldUpdate(setOldPassword)} ></TextField>
+                            <TextField id="new-password" label="Enter New Password" onChange={onTextFieldUpdate(setNewPassword)} helperText={!properPassword() ? 'Password must be between 9 and 255 characters' : ''} error={!properPassword()} type="password"></TextField>
+                            <TextField id="confirm-password" label="Confirm Password" onChange={onTextFieldUpdate(setConfirmPassword)} helperText={!areSame(newPassword, confirmPassword) ? 'Passwords do not match' : ''} error={!areSame(newPassword, confirmPassword)} type="password"></TextField>
                             <Button onClick={() => handleConfirmPassword(oldPassword, newPassword, confirmPassword)}>
                               Change Password
                             </Button>
@@ -97,7 +104,6 @@ export const Header: React.FunctionComponent = (props) => {
                       </Paper>
                     </Modal>
                   ]
-      
                 : [
                     <Button color="inherit" href="/login" key={0}>Login</Button>, 
                     <Button color="inherit" href="/signup" key={1}>Sign up</Button>
@@ -107,6 +113,5 @@ export const Header: React.FunctionComponent = (props) => {
         </Toolbar>
       </AppBar>
     );
-
 };
 
