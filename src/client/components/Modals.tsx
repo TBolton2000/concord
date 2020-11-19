@@ -27,24 +27,22 @@ const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string
   };
 }
 
-
-
-interface Props{
+interface eventProps{
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     inputValues: any;
 }
 
-export const TransitionsModal: React.FC<Props> = ({open, setOpen, inputValues}) =>{
-  const [EventTitle, setEventTitle] = useState("");
-  const [StartDate, setStartDate] = useState(inputValues[0]);
-  const [StartTime, setStartTime] = useState(inputValues[1]);
-  const [EndDate, setEndDate] = useState(inputValues[2]);
-  const [EndTime, setEndTime] = useState(inputValues[3]);
-  const [Problem, setProblem] = useState("");
-  const [Language, setLanguage] = useState("");
-  const [Interviewers, setInterviewers] = useState("");
-  const [Candidates, setCandidates] = useState("");
+export const EventsModal: React.FC<eventProps> = ({open, setOpen, inputValues}) =>{
+  const [eventTitle, setEventTitle] = useState("");
+  const [startDate, setStartDate] = useState(inputValues[0]);
+  const [startTime, setStartTime] = useState(inputValues[1]);
+  const [endDate, setEndDate] = useState(inputValues[2]);
+  const [endTime, setEndTime] = useState(inputValues[3]);
+  const [problem, setProblem] = useState("");
+  const [language, setLanguage] = useState("");
+  const [interviewers, setInterviewers] = useState("");
+  const [candidates, setCandidates] = useState("");
 
   const classes = useStyles();
   
@@ -71,8 +69,8 @@ export const TransitionsModal: React.FC<Props> = ({open, setOpen, inputValues}) 
     }
   }
 
-  const onsubmit = (formRef) => {
-    printData(inputValues,EventTitle,StartDate,StartTime,EndDate,EndTime,Problem,Language,Interviewers,Candidates);
+  const onSubmit = (formRef) => {
+    printData(inputValues,eventTitle,startDate,startTime,endDate,endTime,problem,language,interviewers,candidates);
     if(formRef.current.reportValidity()){
       handleClose();
     }
@@ -121,19 +119,19 @@ export const TransitionsModal: React.FC<Props> = ({open, setOpen, inputValues}) 
                         <TextField required label="Candidates" onChange={onTextFieldUpdate(setCandidates)}/>
                     </Grid>
                     <Grid xs={4} item style={{textAlign: "center"}}>
-                        <TextField required value={StartDate || ""} helperText="Start Date" type="date" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setStartDate)}/>
+                        <TextField required value={startDate || ""} helperText="Start Date" type="date" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setStartDate)}/>
                     </Grid>
                     <Grid xs={4} item style={{textAlign: "center"}}>
-                        <TextField required value={StartTime || ""} helperText="Start Time" type="time" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setStartTime)}/>
+                        <TextField required value={startTime || ""} helperText="Start Time" type="time" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setStartTime)}/>
                     </Grid>
                     <Grid xs={4} item style={{textAlign: "center"}}>
                         <TextField required label="Problem" onChange={onTextFieldUpdate(setProblem)}/>
                     </Grid>
                     <Grid xs={4} item style={{textAlign: "center"}}>
-                        <TextField required value={EndDate || ""} helperText="End Date" type="date" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setEndDate)}/>
+                        <TextField required value={endDate || ""} helperText="End Date" type="date" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setEndDate)}/>
                     </Grid>
                     <Grid xs={4} item style={{textAlign: "center"}}>
-                        <TextField required value={EndTime || ""} helperText="End Time" type="time" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setEndTime)}/>
+                        <TextField required value={endTime || ""} helperText="End Time" type="time" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setEndTime)}/>
                     </Grid>
                     <Grid xs={4} item style={{textAlign: "center"}}>
                         <TextField required label="Language" onChange={onTextFieldUpdate(setLanguage)}/>
@@ -141,7 +139,7 @@ export const TransitionsModal: React.FC<Props> = ({open, setOpen, inputValues}) 
                   </Grid>
                   <Grid container direction="column" alignContent="center" spacing={1}>
                       <Grid xs={4} item style={{padding: 10}}>
-                          <Button variant="contained" onClick={()=>{onsubmit(formRef)}}>
+                          <Button variant="contained" onClick={()=>{onSubmit(formRef)}}>
                               Update
                           </Button>
                       </Grid>

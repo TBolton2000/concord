@@ -4,12 +4,11 @@ import moment from "moment"
 import { Card, CardContent } from "@material-ui/core";
 import { Calendar, momentLocalizer, View, DateLocalizer } from "react-big-calendar"
 
-import { TransitionsModal } from "./Modals"
+import { EventsModal } from "./Modals"
 
 import * as dates from "../../../node_modules/react-big-calendar/lib/utils/dates"
 
 import "!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css"
-
 
 {/* 
 ====================================
@@ -19,15 +18,12 @@ Modules required for implementation:
 
 react-big-calendar
 moment
-react-tackle-box
 
 */}
-
 
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
 let localizer = momentLocalizer(moment) // or globalizeLocalizer moment
-
 
 // instantiating the default view options to select
 const allViews: View[] = ['agenda', 'day', 'week', 'month'];
@@ -55,10 +51,11 @@ class CalendarEvent {
         this.desc = _desc || '';
         this.resourceId = _resourceId;
     }
-  }
+}
 
 
-function SelectableCalendar ({ localizer }: Props) {
+const SelectableCalendar: React.FC<Props> = ( {localizer} ) => {
+
     const [events, setEvents] = useState([{allDay:true, title: "Today"}] as CalendarEvent[]);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalInputs, setModalInputs] = useState([]);
@@ -74,36 +71,10 @@ function SelectableCalendar ({ localizer }: Props) {
             moment(end).format("HH:mm")
         ]);
 
-        //const title = window.prompt('New Event name')
-        //If the title of event exists then, create the event
-        // if (title) {
-
-        //     let newEvent = {
-        //         start: moment(start).toDate(),
-        //         end: moment(end).add(1, "seconds").toDate(),
-        //         title: title
-        //         } as CalendarEvent;
-
-            
-        //     // Tracking previous events
-        //     setEvents([
-        //       ...events,
-        //       newEvent
-        //     ])
-        // }
-        
-        // Modal.result.then((result) => {
-        //     if (result) {
-        //     console.log(result);
-        //     }
-        //     });
-      
-      
-        }
+    }
 
     // Returning calendar state and events
     return (
-        // <div>
         <>
             <Calendar
             selectable
@@ -118,21 +89,17 @@ function SelectableCalendar ({ localizer }: Props) {
             endAccessor='end'
             titleAccessor='title'
             />
-            <TransitionsModal
+            <EventsModal
             open={modalOpen}
             setOpen={setModalOpen}
             inputValues={modalInputs}
             />
         </>
-        /* </div> */
     )
-    //return;
-  }
-
-
-interface DashboardCalendarProps{
-
 }
+
+
+interface DashboardCalendarProps{ }
 
 
 export const DashboardCalendar: React.FC<DashboardCalendarProps> = () => {
@@ -150,5 +117,6 @@ export const DashboardCalendar: React.FC<DashboardCalendarProps> = () => {
             </Card>
         </div>
     );
+
 }
 
