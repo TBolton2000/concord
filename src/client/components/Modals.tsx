@@ -99,14 +99,10 @@ export const EventsModal: React.FC<eventProps> = ({open, setOpen, inputValues}) 
             }}
         >
         <Fade in={open}>
-          <div className={classes.paper}>
+          <Paper>
             <h3 id="transition-modal-title">Create/Edit Event</h3>
             {/* <p id="transition-modal-description">TEXT</p> */}
-            <Paper style={{
-                minWidth: "335px",
-                maxWidth: "700px",
-                margin: "auto"
-            }}>
+            <Paper style={{minWidth:"335px", maxWidth:"700px", margin:"auto"}}>
               <form ref={formRef}>
                 <Grid container direction="row" justify="center" style={{maxWidth: '100%'}} spacing={2}>
                     <Grid xs={4} item style={{textAlign: "center"}}>
@@ -146,7 +142,7 @@ export const EventsModal: React.FC<eventProps> = ({open, setOpen, inputValues}) 
                   </Grid>
                 </form>
             </Paper>
-          </div>
+          </Paper>
         </Fade>
       </Modal>
     </div>
