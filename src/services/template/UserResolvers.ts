@@ -5,8 +5,11 @@ import { createAccessToken, createRefreshToken } from './auth';
 import { MyContext } from './MyContext';
 import { isAuth } from './isAuth';
 import { sendRefreshToken } from './sendRefreshToken';
+import crypto from "crypto";
 import { getConnection } from 'typeorm';
 import { verify } from 'jsonwebtoken';
+import async from "async";
+import nodemailer from "nodemailer";
 
 @ObjectType()
 class LoginResponse {
@@ -131,4 +134,49 @@ export class UserResolver {
 
         return true;
     }
+
+    @Mutation(() => Boolean)
+    async resetPasswordToken(
+        @Arg("email") email: string
+    ) {
+        const buf = crypto.randomBytes(20)
+        const token = buf.toString('hex');
+
+        try {
+            const user = await User.findOne({ email: email });
+            user.resetPasswordToken = token;
+            user.resetPasswordExpires = 3600000; // 1 hour
+            await user.save()
+            const smtpTransport = nodemailer.createTransport({
+                service: 'Gmail', 
+                auth: {
+                  user: 'concordnoreply@gmail.com',
+                  pass: 'CONCORDFOOS123',
+                }
+            });
+
+            const mailOptions = {
+                to: user.email,
+                from: 'learntocodeinfo@gmail.com',
+                subject: 'Node.js Password Reset',
+                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                  'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                  'http://' + 'localhost:3000' + '/resetpassword/' + token + '\n\n' +
+                  'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+            };
+
+            smtpTransport.sendMail(mailOptions)
+            console.log('mail sent')
+
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+
+        return true;
+    }
+    // create another mutation that resets password, pass email, new password, and token, ensure that grabbing the email, in the url there is a token, grab email, password
+    // get the user from the email
+    // check if the token corresponds to that email matches the passed in token, if true, reset the password ... and make sure confirm password is the same on the frontend
+    // new mutation should have email, token, newpassword
 }

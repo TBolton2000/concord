@@ -9,7 +9,8 @@ import { StyledComponentsExample } from './components/StyledComponentsExample';
 import { UsersList } from './components/UsersList';
 import { Login } from './components/Login';
 import { SignUp } from './components/Signup';
-import { ForgotPassword } from './components/ForgotPassword'
+import { ForgotPassword } from './components/ForgotPassword';
+import { ResetPassword } from './components/ResetPassword';
 import { DashboardCalendar } from './components/DashboardCalendar';
 import { DashboardAllEvents } from './components/DashboardAllEvents';
 import { setAccessToken } from './components/accessToken';
@@ -62,6 +63,7 @@ export const App = () => {
             <Route path='/dashboard-upper' component={DashboardCalendar} />
             <Route path='/dashboard-lower' component={DashboardAllEvents} />
             <Route path='/forgotpassword' component={ForgotPassword} />
+            <Route path='/resetpassword' component={ResetPassword} />
           </Switch>
         </main>
       </div>

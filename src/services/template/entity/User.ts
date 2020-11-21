@@ -31,8 +31,13 @@ export class User extends BaseEntity {
     @Column("int", {default: 0})
     tokenVersion: number;
 
-    @Column("int", {default: 0})
+    @Field() // for debugging purposes, remove before pushing to github, field decorator specifically
+    @Column("text", {default: 0})
     resetPasswordToken: string;
+
+    @Field() // for debugging purposes, remove before pushing to github
+    @Column("int", {default: 0})
+    resetPasswordExpires: number;
 
     @OneToMany(()=>Event, event => event.owner)
     ownedEvents: Event[];
