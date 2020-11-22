@@ -10,16 +10,6 @@ import * as dates from "../../../node_modules/react-big-calendar/lib/utils/dates
 
 import "!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css"
 
-{/* 
-====================================
-            READ ME
-Modules required for implementation:
-====================================            
-
-react-big-calendar
-moment
-
-*/}
 
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
@@ -33,7 +23,6 @@ interface Props {
     localizer: DateLocalizer;
 }
 
-// Typescript implemenmtation of Calendar Events
 class CalendarEvent {
     title: string;
     allDay: boolean;
@@ -42,35 +31,25 @@ class CalendarEvent {
     desc: string;
     resourceId?: string;
     tooltip?: string;
-
-    constructor(_title: string, _start: Date, _endDate: Date, _allDay?: boolean, _desc?: string, _resourceId?: string) {
-        this.title = _title;
-        this.allDay = _allDay || false;
-        this.start = _start;
-        this.end = _endDate;
-        this.desc = _desc || '';
-        this.resourceId = _resourceId;
-    }
 }
 
 
 const SelectableCalendar: React.FC<Props> = ( {localizer} ) => {
 
-    const [events, setEvents] = useState([{allDay:true, title: "Today"}] as CalendarEvent[]);
+    const [events, setEvents] = useState([{allDay:true}] as CalendarEvent[]);
     const [modalOpen, setModalOpen] = useState(false);
-    const [modalInputs, setModalInputs] = useState([]);
+    const [modalStartDate, setModalStartDate] = useState("");
+    const [modalStartTime, setModalStartTime] = useState("");
+    const [modalEndDate, setModalEndDate] = useState("");
+    const [modalEndTime, setModalEndTime] = useState("");
 
     // prompting user for new event
     const handleSelect = ({ start, end }) => {
-
         setModalOpen(true);
-        setModalInputs([ 
-            moment(start).format("yyyy-MM-DD"), 
-            moment(start).format("HH:mm"), 
-            moment(end).format("yyyy-MM-DD"),
-            moment(end).format("HH:mm")
-        ]);
-
+        setModalStartDate(moment(start).format("yyyy-MM-DD"));
+        setModalStartTime(moment(start).format("HH:mm"));
+        setModalEndDate(moment(end).format("yyyy-MM-DD"));
+        setModalEndTime(moment(end).format("HH:mm"));
     }
 
     // Returning calendar state and events
@@ -92,7 +71,10 @@ const SelectableCalendar: React.FC<Props> = ( {localizer} ) => {
             <EventsModal
             open={modalOpen}
             setOpen={setModalOpen}
-            inputValues={modalInputs}
+            startDateRef={modalStartDate}
+            startTimeRef={modalStartTime}
+            endDateRef={modalEndDate}
+            endTimeRef={modalEndTime}
             />
         </>
     )

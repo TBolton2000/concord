@@ -30,15 +30,18 @@ const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string
 interface eventProps{
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    inputValues: any;
+    startDateRef: string;
+    startTimeRef: string;
+    endDateRef: string;
+    endTimeRef: string;
 }
 
-export const EventsModal: React.FC<eventProps> = ({open, setOpen, inputValues}) =>{
+export const EventsModal: React.FC<eventProps> = ({open, setOpen, startDateRef, startTimeRef, endDateRef, endTimeRef}) => {
   const [eventTitle, setEventTitle] = useState("");
-  const [startDate, setStartDate] = useState(inputValues[0]);
-  const [startTime, setStartTime] = useState(inputValues[1]);
-  const [endDate, setEndDate] = useState(inputValues[2]);
-  const [endTime, setEndTime] = useState(inputValues[3]);
+  const [startDate, setStartDate] = useState(startDateRef);
+  const [startTime, setStartTime] = useState(startTimeRef);
+  const [endDate, setEndDate] = useState(endDateRef);
+  const [endTime, setEndTime] = useState(endTimeRef);
   const [problem, setProblem] = useState("");
   const [language, setLanguage] = useState("");
   const [interviewers, setInterviewers] = useState("");
@@ -48,11 +51,11 @@ export const EventsModal: React.FC<eventProps> = ({open, setOpen, inputValues}) 
   
   useEffect(() => { 
     // console.log("component updated");
-    setStartDate(inputValues[0]); 
-    setStartTime(inputValues[1]); 
-    setEndDate(inputValues[2]); 
-    setEndTime(inputValues[3]); 
-  }, [inputValues]);
+    setStartDate(startDateRef); 
+    setStartTime(startTimeRef); 
+    setEndDate(endDateRef); 
+    setEndTime(endTimeRef); 
+  }, [startDateRef, startTimeRef, endDateRef, endTimeRef]);
   
   // const handleOpen = () => {
   //   setOpen(true);
@@ -70,7 +73,7 @@ export const EventsModal: React.FC<eventProps> = ({open, setOpen, inputValues}) 
   }
 
   const onSubmit = (formRef) => {
-    printData(inputValues,eventTitle,startDate,startTime,endDate,endTime,problem,language,interviewers,candidates);
+    printData([startDateRef, startTimeRef, endDateRef, endTimeRef],eventTitle,startDate,startTime,endDate,endTime,problem,language,interviewers,candidates);
     if(formRef.current.reportValidity()){
       handleClose();
     }
@@ -79,25 +82,20 @@ export const EventsModal: React.FC<eventProps> = ({open, setOpen, inputValues}) 
     }
   }
 
-  // console.log(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(inputValues[0]));
-  // console.log(new Intl.DateTimeFormat('en-US', {hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(inputValues[0]));
-  
   const formRef = React.useRef(null);
 
   return (
     <div>
-        <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            className={classes.modal}
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-            timeout: 500,
-            }}
-        >
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{timeout: 500,}}
+      >
         <Fade in={open}>
           <Paper>
             <h3 id="transition-modal-title">Create/Edit Event</h3>
