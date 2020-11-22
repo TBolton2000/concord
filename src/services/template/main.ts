@@ -8,7 +8,7 @@ import { pagesRouter } from './routes/pages-router';
 import { staticsRouter } from './routes/statics-router';
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./UserResolvers";
-import { EventResolver } from "./EventResolvers";
+import { InterviewResolver } from "./InterviewResolvers";
 import * as config from './config';
 import { createConnection } from 'typeorm';
 import cookieParser from "cookie-parser";
@@ -28,7 +28,7 @@ console.log(`*******************************************`);
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [UserResolver, EventResolver]
+            resolvers: [UserResolver, InterviewResolver]
         }),
         context: ({ req, res }) => ( {req, res} )
     });

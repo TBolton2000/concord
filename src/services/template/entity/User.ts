@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, Length } from 'class-validator';
 import { Field, Int, ObjectType } from 'type-graphql';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Unique, OneToMany, ManyToMany, JoinTable} from "typeorm";
-import { Event } from './Event';
+import { Interview } from './Interviews';
 
 @ObjectType()
 @Entity("users")
@@ -31,10 +31,16 @@ export class User extends BaseEntity {
     @Column("int", {default: 0})
     tokenVersion: number;
 
-    @OneToMany(()=>Event, event => event.owner)
-    ownedEvents: Event[];
+    
+    @OneToMany(() => Interview, (interview) => interview.owner)
+    ownedInterviews: Interview[];
 
-    @ManyToMany(()=>Event, event => event.participants)
+    @ManyToMany(()=>Interview, interview => interview.interviewers)
     @JoinTable()
-    events: Event[];
+    intervsInterviews: Interview[];
+
+    
+    @ManyToMany(()=>Interview, interview => interview.candidates)
+    @JoinTable()
+    candsInterviews: Interview[];
 }
