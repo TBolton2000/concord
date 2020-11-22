@@ -34,7 +34,7 @@ class CalendarEvent {
 }
 
 
-const SelectableCalendar: React.FC<Props> = ( {localizer} ) => {
+const EventsCalendar: React.FC<Props> = ( {localizer} ) => {
 
     const [events, setEvents] = useState([{allDay:true}] as CalendarEvent[]);
     const [modalOpen, setModalOpen] = useState(false);
@@ -93,7 +93,7 @@ export const DashboardCalendar: React.FC<DashboardCalendarProps> = () => {
                 <CardContent> 
                     {/* initializing the viewable calandar in the card */}
                     <div style={{ height: "100vh" }}>
-                        <SelectableCalendar localizer={localizer} />
+                        <EventsCalendar localizer={localizer} />
                     </div>
                 </CardContent>
             </Card>
