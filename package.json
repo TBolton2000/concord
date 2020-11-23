@@ -76,6 +76,7 @@
     "postgresql": "0.0.1",
     "react-big-calendar": "^0.28.1",
     "react-tackle-box": "^2.1.0",
+    "socket.io": "^3.0.3",
     "styled-components": "^5.1.0",
     "tslib": "^1.12.0"
   },

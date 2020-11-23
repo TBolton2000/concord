@@ -96,7 +96,7 @@ export const EventsModal: React.FC<eventProps> = ({open, setOpen, startDateRef, 
       BackdropProps={{timeout: 500,}}
     >
       <Fade in={open}>
-        <Paper>
+        <Paper style={{minWidth:"335px", maxWidth:"700px", margin:"auto"}}>
           <h3 id="transition-modal-title">Create/Edit Event</h3>
           {/* <p id="transition-modal-description">TEXT</p> */}
           <Paper style={{minWidth:"335px", maxWidth:"700px", margin:"auto"}}>
