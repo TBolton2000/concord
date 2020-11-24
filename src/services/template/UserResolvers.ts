@@ -18,8 +18,6 @@ export class UpdateUserInfo {
 
   @Field({ nullable: true })
   password?: string;
-
-  
 }
 
 @ObjectType()
