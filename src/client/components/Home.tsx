@@ -13,6 +13,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const Home: React.FunctionComponent = () => {
+
   const classes = useStyles({});
   return (
     <Grid item xs={12}>
