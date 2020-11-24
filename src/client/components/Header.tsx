@@ -1,9 +1,10 @@
-import { AppBar, makeStyles, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
+import { AppBar, makeStyles, Toolbar, Typography, Button, IconButton, Paper, Grid, Modal, TextField } from '@material-ui/core';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { useLogoutMutation, useMeQuery } from '../generated/graphql';
-import { setAccessToken } from './accessToken';
+import { useMeQuery } from '../generated/graphql';
+import { UserSettingsModal } from './UserSettingsModal';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,16 +17,16 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
+  return (e : React.ChangeEvent<HTMLInputElement>) => {
+      toUpdate(e.target.value);
+  };
+}
+
 export const Header: React.FunctionComponent = (props) => {
   const {data, loading} = useMeQuery();
-  const [logout, {client}] = useLogoutMutation();
   const isLoggedIn = data && data.me;
-
-  const logOutUser = async () => {
-    await logout();
-    setAccessToken("");
-    await client.resetStore();
-  }
+  const [open, setOpen] = useState(false);
 
   const classes = useStyles({});
     return (
@@ -39,9 +40,9 @@ export const Header: React.FunctionComponent = (props) => {
             ? null :
               isLoggedIn
                 ? [
-                    <IconButton color="inherit" key={0}><SettingsIcon color="inherit"/></IconButton>,
+                    <IconButton color="inherit" key={0} onClick={() => setOpen(true)}><SettingsIcon color="inherit" /></IconButton>,
                     <Fragment key={1}>{data.me.name}</Fragment>,
-                    <Button onClick={logOutUser} key={2}>Log Out</Button>
+                    <UserSettingsModal  key={2} open={open} setOpen={setOpen} data={data}></UserSettingsModal>
                   ]
                 : [
                     <Button color="inherit" href="/login" key={0}>Login</Button>, 
@@ -52,6 +53,5 @@ export const Header: React.FunctionComponent = (props) => {
         </Toolbar>
       </AppBar>
     );
-
 };
 
