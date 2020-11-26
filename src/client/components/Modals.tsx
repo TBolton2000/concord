@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Button, Grid, Paper, TextField } from '@material-ui/core';
+import { Button, Grid, IconButton, Paper, SvgIcon, SvgIconProps, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -11,12 +11,20 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      outline: 'none',
+
     },
     paper: {
       backgroundColor: theme.palette.background.paper,
       border: '2px solid #000',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
+      
+    },
+    root: {
+      '& > svg': {
+        margin: theme.spacing(2),
+      },
     },
   }),
 );
@@ -82,6 +90,14 @@ export const EventsModal: React.FC<eventProps> = ({open, setOpen, startDateRef, 
     }
   }
 
+  const CloseIcon = (props: SvgIconProps) => {
+    return (
+      <SvgIcon {...props}>
+        <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
+      </SvgIcon>
+    );
+  }
+
   const formRef = React.useRef(null);
 
   return (
@@ -96,49 +112,51 @@ export const EventsModal: React.FC<eventProps> = ({open, setOpen, startDateRef, 
       BackdropProps={{timeout: 500,}}
     >
       <Fade in={open}>
-        <Paper style={{minWidth:"335px", maxWidth:"700px", margin:"auto"}}>
-          <h3 id="transition-modal-title">Create/Edit Event</h3>
-          {/* <p id="transition-modal-description">TEXT</p> */}
-          <Paper style={{minWidth:"335px", maxWidth:"700px", margin:"auto"}}>
-            <form ref={formRef}>
-              <Grid container direction="row" justify="center" style={{maxWidth: '100%'}} spacing={2}>
-                  <Grid xs={4} item style={{textAlign: "center"}}>
-                      <TextField required label="Event Title" onChange={onTextFieldUpdate(setEventTitle)}/>
-                  </Grid>
-                  <Grid xs={4} item style={{textAlign: "center"}}>
-                      <TextField required label="Interviewers" onChange={onTextFieldUpdate(setInterviewers)}/>
-                  </Grid>
-                  <Grid xs={4} item style={{textAlign: "center"}}>
-                      <TextField required label="Candidates" onChange={onTextFieldUpdate(setCandidates)}/>
-                  </Grid>
-                  <Grid xs={4} item style={{textAlign: "center"}}>
-                      <TextField required value={startDate || ""} helperText="Start Date" type="date" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setStartDate)}/>
-                  </Grid>
-                  <Grid xs={4} item style={{textAlign: "center"}}>
-                      <TextField required value={startTime || ""} helperText="Start Time" type="time" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setStartTime)}/>
-                  </Grid>
-                  <Grid xs={4} item style={{textAlign: "center"}}>
-                      <TextField required label="Problem" onChange={onTextFieldUpdate(setProblem)}/>
-                  </Grid>
-                  <Grid xs={4} item style={{textAlign: "center"}}>
-                      <TextField required value={endDate || ""} helperText="End Date" type="date" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setEndDate)}/>
-                  </Grid>
-                  <Grid xs={4} item style={{textAlign: "center"}}>
-                      <TextField required value={endTime || ""} helperText="End Time" type="time" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setEndTime)}/>
-                  </Grid>
-                  <Grid xs={4} item style={{textAlign: "center"}}>
-                      <TextField required label="Language" onChange={onTextFieldUpdate(setLanguage)}/>
-                  </Grid>
+        <Paper style={{minWidth:"335px", maxWidth:"700px", margin:"auto", outline: "none", padding: "15px"}}>
+          <div style={{display: "flex", justifyContent: "space-between"}}>
+            <h3 style={{margin:"10px"}}>Create/Edit Event</h3>
+            <IconButton color="secondary" onClick={handleClose}>
+              <CloseIcon/>
+            </IconButton>
+          </div>
+          <form ref={formRef}>
+            <Grid container direction="row" justify="center" style={{maxWidth: '100%'}} spacing={2}>
+                <Grid xs={4} item style={{textAlign: "center"}}>
+                    <TextField required label="Event Title" onChange={onTextFieldUpdate(setEventTitle)}/>
                 </Grid>
-                <Grid container direction="column" alignContent="center" spacing={1}>
-                    <Grid xs={4} item style={{padding: 10}}>
-                        <Button variant="contained" onClick={()=>{onSubmit(formRef)}}>
-                            Update
-                        </Button>
-                    </Grid>
+                <Grid xs={4} item style={{textAlign: "center"}}>
+                    <TextField required label="Interviewers" onChange={onTextFieldUpdate(setInterviewers)}/>
                 </Grid>
-              </form>
-          </Paper>
+                <Grid xs={4} item style={{textAlign: "center"}}>
+                    <TextField required label="Candidates" onChange={onTextFieldUpdate(setCandidates)}/>
+                </Grid>
+                <Grid xs={4} item style={{textAlign: "center"}}>
+                    <TextField required value={startDate || ""} helperText="Start Date" type="date" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setStartDate)}/>
+                </Grid>
+                <Grid xs={4} item style={{textAlign: "center"}}>
+                    <TextField required value={startTime || ""} helperText="Start Time" type="time" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setStartTime)}/>
+                </Grid>
+                <Grid xs={4} item style={{textAlign: "center"}}>
+                    <TextField required label="Problem" onChange={onTextFieldUpdate(setProblem)}/>
+                </Grid>
+                <Grid xs={4} item style={{textAlign: "center"}}>
+                    <TextField required value={endDate || ""} helperText="End Date" type="date" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setEndDate)}/>
+                </Grid>
+                <Grid xs={4} item style={{textAlign: "center"}}>
+                    <TextField required value={endTime || ""} helperText="End Time" type="time" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setEndTime)}/>
+                </Grid>
+                <Grid xs={4} item style={{textAlign: "center"}}>
+                    <TextField required label="Language" onChange={onTextFieldUpdate(setLanguage)}/>
+                </Grid>
+              </Grid>
+              <Grid container direction="column" alignContent="center" spacing={1}>
+                  <Grid xs={4} item style={{padding: 10}}>
+                      <Button variant="contained" onClick={()=>{onSubmit(formRef)}}>
+                          Update
+                      </Button>
+                  </Grid>
+              </Grid>
+            </form>
         </Paper>
       </Fade>
     </Modal>
