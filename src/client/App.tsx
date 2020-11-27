@@ -63,7 +63,7 @@ export const App = () => {
             <Route path='/dashboard-upper' component={DashboardCalendar} />
             <Route path='/dashboard-lower' component={DashboardAllEvents} />
             <Route path='/forgotpassword' component={ForgotPassword} />
-            <Route path='/resetpassword' component={ResetPassword} />
+            <Route path='/resetpassword/:token' component={ResetPassword} />
           </Switch>
         </main>
       </div>

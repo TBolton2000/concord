@@ -8,8 +8,8 @@ import { sendRefreshToken } from './sendRefreshToken';
 import crypto from "crypto";
 import { getConnection } from 'typeorm';
 import { verify } from 'jsonwebtoken';
-import async from "async";
 import nodemailer from "nodemailer";
+import { userInfo } from 'os';
 
 @ObjectType()
 class LoginResponse {
@@ -158,15 +158,15 @@ export class UserResolver {
             const mailOptions = {
                 to: user.email,
                 from: 'learntocodeinfo@gmail.com',
-                subject: 'Node.js Password Reset',
+                subject: 'Concord Password Reset',
                 text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                   'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                  'http://' + 'localhost:3000' + '/resetpassword/' + token + '\n\n' +
-                  'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                    process.env.NODE_ENV !== 'production' ? "http://localhost:3000" + '/resetpassword/' + token + '\n\n' + 'If you did not request this, please ignore this email and your password will remain unchanged.\n' 
+                    : "https://concord-app.herokuapp.com/" + '/resetpassword/' + token + '\n\n' + 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
             };
 
-            smtpTransport.sendMail(mailOptions)
-            console.log('mail sent')
+            smtpTransport.sendMail(mailOptions);
+            console.log('mail sent');
 
         } catch (error) {
             console.log(error);
@@ -175,8 +175,32 @@ export class UserResolver {
 
         return true;
     }
-    // create another mutation that resets password, pass email, new password, and token, ensure that grabbing the email, in the url there is a token, grab email, password
-    // get the user from the email
-    // check if the token corresponds to that email matches the passed in token, if true, reset the password ... and make sure confirm password is the same on the frontend
-    // new mutation should have email, token, newpassword
+
+    @Mutation(() => Boolean)
+    async resetPassword(
+        @Arg("newPassword") newPassword: string,
+        @Arg("token") token: string,
+    ) {  
+      try {
+        if (token === "") {
+            throw new Error("Token is Invalid");
+            return false;
+        }
+        const user = await User.findOne({where: { resetPasswordToken: token }})
+        if (!user) {
+            throw new Error("Token Invalid");
+        }
+        await User.update(user, { 
+            password: await hash(newPassword, 12),
+            resetPasswordToken: "",
+            resetPasswordExpires: 0
+        })
+     } catch (error) {
+         console.log(error);
+         console.log('something broke')
+         return false;
+     }
+    console.log('reset worked');
+    return true
+   }
 }
