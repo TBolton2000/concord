@@ -87,7 +87,7 @@ export const EventsModal: React.FC<eventProps> = ({ open, setOpen, startDateRef,
         }
         else {
             return formRef.current.reportValidity();
-        }
+        } 
     }
 
     const formRef = React.useRef(null);
