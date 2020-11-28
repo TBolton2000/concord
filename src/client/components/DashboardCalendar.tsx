@@ -34,9 +34,9 @@ class CalendarEvent {
 }
 
 
-const EventsCalendar: React.FC<Props> = ( {localizer} ) => {
+const EventsCalendar: React.FC<Props> = ({ localizer }) => {
 
-    const [events, setEvents] = useState([{allDay:true}] as CalendarEvent[]);
+    const [events, setEvents] = useState([{ allDay: true }] as CalendarEvent[]);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalStartDate, setModalStartDate] = useState("");
     const [modalStartTime, setModalStartTime] = useState("");
@@ -56,41 +56,41 @@ const EventsCalendar: React.FC<Props> = ( {localizer} ) => {
     return (
         <>
             <Calendar
-            selectable
-            localizer={localizer}
-            events={events}
-            defaultView='month'
-            views={allViews}
-            max={dates.add(dates.endOf(new Date(2015, 17, 1), 'day'), -1, 'hours')}
-            onSelectEvent={event => alert(event.title)}
-            onSelectSlot={handleSelect}
-            startAccessor='start'
-            endAccessor='end'
-            titleAccessor='title'
+                selectable
+                localizer={localizer}
+                events={events}
+                defaultView='month'
+                views={allViews}
+                max={dates.add(dates.endOf(new Date(2015, 17, 1), 'day'), -1, 'hours')}
+                onSelectEvent={event => alert(event.title)}
+                onSelectSlot={handleSelect}
+                startAccessor='start'
+                endAccessor='end'
+                titleAccessor='title'
             />
             <EventsModal
-            open={modalOpen}
-            setOpen={setModalOpen}
-            startDateRef={modalStartDate}
-            startTimeRef={modalStartTime}
-            endDateRef={modalEndDate}
-            endTimeRef={modalEndTime}
+                open={modalOpen}
+                setOpen={setModalOpen}
+                startDateRef={modalStartDate}
+                startTimeRef={modalStartTime}
+                endDateRef={modalEndDate}
+                endTimeRef={modalEndTime}
             />
         </>
     )
 }
 
 
-interface DashboardCalendarProps{ }
+interface DashboardCalendarProps { }
 
 
 export const DashboardCalendar: React.FC<DashboardCalendarProps> = () => {
 
-    return(
+    return (
         <div>
-            <h3>DashboardCalendar</h3>
+            <h3>Dashboard Calendar</h3>
             <Card>
-                <CardContent> 
+                <CardContent>
                     {/* initializing the viewable calandar in the card */}
                     <div style={{ height: "100vh" }}>
                         <EventsCalendar localizer={localizer} />
