@@ -22,11 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(2, 4, 3),
 
         },
-        root: {
-            '& > svg': {
-                margin: theme.spacing(2),
-            },
-        },
     }),
 );
 
