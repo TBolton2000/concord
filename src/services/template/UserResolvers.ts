@@ -145,19 +145,19 @@ export class UserResolver {
         try {
             const user = await User.findOne({ email: email });
             user.resetPasswordToken = token;
-            user.resetPasswordExpires = 3600000; // 1 hour
+            user.resetPasswordExpires = BigInt(Date.now() + 3600000);
             await user.save()
             const smtpTransport = nodemailer.createTransport({
                 service: 'Gmail', 
                 auth: {
                   user: 'concordnoreply@gmail.com',
-                  pass: 'CONCORDFOOS123',
+                  pass: process.env.EMAIL_PASSWORD,
                 }
             });
 
             const mailOptions = {
                 to: user.email,
-                from: 'learntocodeinfo@gmail.com',
+                from: 'concordnoreply@gmail.com',
                 subject: 'Concord Password Reset',
                 text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                   'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -184,20 +184,38 @@ export class UserResolver {
       try {
         if (token === "") {
             throw new Error("Token is Invalid");
-            return false;
         }
         const user = await User.findOne({where: { resetPasswordToken: token }})
-        if (!user) {
+        if (!user || Date.now() > user.resetPasswordExpires) {
             throw new Error("Token Invalid");
         }
         await User.update(user, { 
             password: await hash(newPassword, 12),
             resetPasswordToken: "",
-            resetPasswordExpires: 0
+            resetPasswordExpires: BigInt(0)
         })
+
+        const smtpTransport = nodemailer.createTransport({
+            service: 'Gmail', 
+            auth: {
+              user: 'concordnoreply@gmail.com',
+              pass: process.env.EMAIL_PASSWORD,
+            }
+        });
+
+        const mailOptions = {
+            to: user.email,
+            from: 'concordnoreply@gmail.com',
+            subject: 'Your password has been changed',
+            text: 'Hello,\n\n' + 
+            'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+        };
+
+        smtpTransport.sendMail(mailOptions);
+        console.log('mail sent');
+
      } catch (error) {
          console.log(error);
-         console.log('something broke')
          return false;
      }
     console.log('reset worked');

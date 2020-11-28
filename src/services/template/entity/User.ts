@@ -34,8 +34,8 @@ export class User extends BaseEntity {
     @Column("text", {default: 0})
     resetPasswordToken: string;
 
-    @Column("int", {default: 0})
-    resetPasswordExpires: number;
+    @Column("bigint", {default: 0})
+    resetPasswordExpires: bigint;
 
     @OneToMany(()=>Event, event => event.owner)
     ownedEvents: Event[];
