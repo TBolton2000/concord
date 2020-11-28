@@ -4,6 +4,7 @@ import {Tabs, TabLink, TabContent} from "react-tabs-redux";
 import Editor from '@monaco-editor/react';
 import { ClockLoader as Loader } from "react-spinners";
 import examples from "./editor_comps/examples";
+import BasicLayout from "./editor_comps/BasicLayout"
 
 export const CodeEditor: React.FunctionComponent = () => {
     const [theme, setTheme] = useState("light");
@@ -19,38 +20,45 @@ export const CodeEditor: React.FunctionComponent = () => {
 
     return (
         <div className="CodeEditor">
-            <Tabs>
+            <BasicLayout></BasicLayout>
+            {/* <ReactGridLayout className="layout" layout={layout} cols={3} rowHeight={10} width={1200}>
+                <div key="a">
+                    a  
+                    <Tabs>
+                        <button onClick={toggleTheme} disabled={!isEditorReady}>
+                            Toggle theme
+                        </button>
 
-                <button onClick={toggleTheme} disabled={!isEditorReady}>
-                    Toggle theme
-                </button>
+                        <TabLink to="tab1">Tab1</TabLink>
+                        <TabLink to="tab2">Tab2</TabLink>
+                        <TabLink to="tab3">Tab3</TabLink>
 
-                <TabLink to="tab1">Tab1</TabLink>
-                <TabLink to="tab2">Tab2</TabLink>
-                <TabLink to="tab3">Tab3</TabLink>
+                        <TabContent for="tab1">
+                            <Editor 
+                                height="90vh" // By default, it fully fits with its parent
+                                theme={theme}
+                                language={"python"}
+                                loading={<Loader />}
+                                value={examples["python"]}
+                                editorDidMount={handleEditorDidMount}/>
+                        </TabContent>
 
-                <TabContent for="tab1">
-                    <Editor 
-                        height="90vh" // By default, it fully fits with its parent
-                        theme={theme}
-                        language={"python"}
-                        loading={<Loader />}
-                        value={examples["python"]}
-                        editorDidMount={handleEditorDidMount}/>
-                </TabContent>
+                        <TabContent for="tab2">
+                            <Editor 
+                                height="90vh" // By default, it fully fits with its parent
+                                theme={theme}
+                                language={"python"}
+                                loading={<Loader />}
+                                value={examples["python"]}
+                                editorDidMount={handleEditorDidMount}/>
+                        </TabContent>
 
-                <TabContent for="tab2">
-                    <Editor 
-                        height="90vh" // By default, it fully fits with its parent
-                        theme={theme}
-                        language={"python"}
-                        loading={<Loader />}
-                        value={examples["python"]}
-                        editorDidMount={handleEditorDidMount}/>
-                </TabContent>
-
-                <TabContent for="tab3">/* content for tab #3 */</TabContent>
-            </Tabs>
+                        <TabContent for="tab3">/* content for tab #3 </TabContent>
+                    </Tabs>
+                </div>
+                <div key="b" style={{backgroundColor: 'grey'}}>b</div>
+                <div key="c" style={{backgroundColor: 'grey'}}>c</div>
+            </ReactGridLayout> */}
     </div>
   );
 }
@@ -130,9 +138,9 @@ export const CodeEditor: React.FunctionComponent = () => {
 
 // import React, { useState } from "react";
 // import styled from "styled-components";
-// import { MarkedInput } from "./MarkedInput";
-// import { Result } from "./Result";
-// import EditorContext from "./EditorContext";
+// import { MarkedInput } from "./editor_comps/MarkedInput";
+// import { Result } from "./editor_comps/Result";
+// import EditorContext from "./editor_comps/EditorContext";
 
 // const AppContainer = styled.div`
 //   width: 100%;

@@ -147,6 +147,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-golden-layout": "^1.0.6",
+    "react-grid-layout": "^1.2.0",
     "react-icons": "^3.11.0",
     "react-markdown": "^5.0.2",
     "react-monaco-editor": "^0.40.0",
