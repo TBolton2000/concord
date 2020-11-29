@@ -6,10 +6,14 @@ import { ClockLoader as Loader } from "react-spinners";
 import examples from "./editor_comps/examples";
 import BasicLayout from "./editor_comps/BasicLayout"
 import GridLayout from 'react-grid-layout';
+import "../../../node_modules/react-grid-layout/css/styles.css";
+import "../../../node_modules/react-resizable/css/styles.css";
+import { Grid, Tab } from "@material-ui/core";
 
 export const CodeEditor: React.FunctionComponent = () => {
     const [theme, setTheme] = useState("light");
     const [isEditorReady, setIsEditorReady] = useState(false);
+    const numOfParticipants = 5;
 
     function handleEditorDidMount() {
         setIsEditorReady(true);
@@ -18,19 +22,48 @@ export const CodeEditor: React.FunctionComponent = () => {
     function toggleTheme() {
         setTheme(theme === "light" ? "dark" : "light");
     }
-    const layout = [
-        {i: 'a', x: 0, y: 0, w: 1, h: 2, static: true},
-        {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4},
-        {i: 'c', x: 4, y: 0, w: 1, h: 2}
-      ];
+    // const layout = [
+    //     {i: 'a', x: 0, y: 0, w: 1, h: 2, static: true},
+    //     {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4},
+    //     {i: 'c', x: 4, y: 0, w: 1, h: 2}
+    //   ];
 
     return (
         <div className="CodeEditor">
-            <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
+            <Grid container direction="row">
+                <Grid item xs={12}>
+                    <Tabs value={2}>
+                        {(Array.from({length: numOfParticipants}, (_, i) => i + 1)).map(element => 
+                            <Tab label={`Participant ${element}`} />
+                        )}
+                    </Tabs>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    {/* Change this editor to the markdown viewer */}
+                    <Editor
+                        height="75vh" // By default, it fully fits with its parent
+                        theme={theme}
+                        language={"python"}
+                        loading={<Loader />}
+                        value={examples["python"]}
+                        editorDidMount={handleEditorDidMount}/>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    {/* Here is the editor. It's contents should change depending on which participant is selected */}
+                    <Editor
+                    height="75vh" // By default, it fully fits with its parent
+                    theme={theme}
+                    language={"python"}
+                    loading={<Loader />}
+                    value={examples["python"]}
+                    editorDidMount={handleEditorDidMount}/>
+                </Grid>
+            </Grid>
+            {/* <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
                 <div key="a" style={{backgroundColor: "grey"}}>a</div>
                 <div key="b" style={{backgroundColor: "grey"}}>b</div>
                 <div key="c" style={{backgroundColor: "grey"}}>c</div>
-            </GridLayout>
+            </GridLayout> */}
             {/* <BasicLayout></BasicLayout> */}
             {/* <ReactGridLayout className="layout" layout={layout} cols={3} rowHeight={10} width={1200}>
                 <div key="a">

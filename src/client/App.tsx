@@ -50,7 +50,7 @@ export const App = () => {
       <div className={classes.root}>
         <CssBaseline />
         <Header />
-        <SideMenu />
+        {/* <SideMenu /> */}
         <main className={classes.main}>
           <div className={classes.toolbar} />
           <Switch>
