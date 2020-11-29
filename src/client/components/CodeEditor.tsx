@@ -5,6 +5,7 @@ import Editor from '@monaco-editor/react';
 import { ClockLoader as Loader } from "react-spinners";
 import examples from "./editor_comps/examples";
 import BasicLayout from "./editor_comps/BasicLayout"
+import GridLayout from 'react-grid-layout';
 
 export const CodeEditor: React.FunctionComponent = () => {
     const [theme, setTheme] = useState("light");
@@ -17,10 +18,20 @@ export const CodeEditor: React.FunctionComponent = () => {
     function toggleTheme() {
         setTheme(theme === "light" ? "dark" : "light");
     }
+    const layout = [
+        {i: 'a', x: 0, y: 0, w: 1, h: 2, static: true},
+        {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4},
+        {i: 'c', x: 4, y: 0, w: 1, h: 2}
+      ];
 
     return (
         <div className="CodeEditor">
-            <BasicLayout></BasicLayout>
+            <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
+                <div key="a" style={{backgroundColor: "grey"}}>a</div>
+                <div key="b" style={{backgroundColor: "grey"}}>b</div>
+                <div key="c" style={{backgroundColor: "grey"}}>c</div>
+            </GridLayout>
+            {/* <BasicLayout></BasicLayout> */}
             {/* <ReactGridLayout className="layout" layout={layout} cols={3} rowHeight={10} width={1200}>
                 <div key="a">
                     a  
