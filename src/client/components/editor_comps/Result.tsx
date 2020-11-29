@@ -26,7 +26,12 @@ const ResultArea = styled.div`
 `;
 
 export function Result(props) {
-  const { markdownText } = useContext(editorContext);
+  const markdownText = "> #### The quarterly results look great!\n" +
+                        ">\n" +
+                        "> - Revenue was off the chart.\n" +
+                        "> - Profits were higher than ever.\n" +
+                        ">\n" + 
+                        ">  Everything is going according to plan.";
 
   return (
     <Container>

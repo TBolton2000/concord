@@ -1,6 +1,6 @@
-import React, { useState, Component} from "react";
+import React, { useState, useEffect, Component} from "react";
 import CustomTabsHook from "./editor_comps/AddAndDeleteTab";
-import {Tabs, TabLink, TabContent} from "react-tabs-redux";
+import {TabLink, TabContent} from "react-tabs-redux";
 import Editor from '@monaco-editor/react';
 import { ClockLoader as Loader } from "react-spinners";
 import examples from "./editor_comps/examples";
@@ -8,12 +8,66 @@ import BasicLayout from "./editor_comps/BasicLayout"
 import GridLayout from 'react-grid-layout';
 import "../../../node_modules/react-grid-layout/css/styles.css";
 import "../../../node_modules/react-resizable/css/styles.css";
-import { Grid, Tab } from "@material-ui/core";
+import { Grid, Tab, Tabs, Typography, Box } from "@material-ui/core";
+import { ControlledEditor } from "@monaco-editor/react";
+
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: any;
+    value: any;
+  }
+  
+function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+        >
+        {value === index && (
+            <Box >
+            <Typography>{children}</Typography>
+            </Box>
+        )}
+        </div>
+    );
+}
+
+function a11yProps(index: any) {
+    return {
+      id: `scrollable-auto-tab-${index}`,
+      'aria-controls': `scrollable-auto-tabpanel-${index}`,
+    };
+  }
 
 export const CodeEditor: React.FunctionComponent = () => {
     const [theme, setTheme] = useState("light");
     const [isEditorReady, setIsEditorReady] = useState(false);
     const numOfParticipants = 5;
+    const [selectedTab, setSelectedTab] = React.useState(0);
+    const [user1, setUser1] = useState('');
+    const [user2, setUser2]  = useState('');
+    const [user3, setUser3]  = useState('');
+    const [user4, setUser4]  = useState('');
+    const [user5, setUser5]  = useState('');
+    
+    // const changeHandler = (e) => {
+    //     console.log(e);
+    //     console.log('@@@@@###')
+    //     setAllValues({
+    //       ...allValues,
+    //       [e.target.value]: e.target.value
+          
+    //     })
+    // };
+    
+    const handleChange = (event, newValue) => {
+        setSelectedTab(newValue);
+    }
 
     function handleEditorDidMount() {
         setIsEditorReady(true);
@@ -28,36 +82,61 @@ export const CodeEditor: React.FunctionComponent = () => {
     //     {i: 'c', x: 4, y: 0, w: 1, h: 2}
     //   ];
 
+    const handleEditorChange = (ev, value) => {
+        user1 = value
+    }
+
+    useEffect(() => {
+        
+        setUser1('hello');
+        setUser2('urur');
+        setUser3('dddd');
+        setUser4('helddlo');
+        setUser5('hello');
+    }, [user1, user2, user3, user4, user5]);
+
     return (
         <div className="CodeEditor">
             <Grid container direction="row">
                 <Grid item xs={12}>
-                    <Tabs value={2}>
+                    <Tabs indicatorColor="primary" textColor="primary" variant="fullWidth" value={selectedTab} onChange={handleChange}>
                         {(Array.from({length: numOfParticipants}, (_, i) => i + 1)).map(element => 
-                            <Tab label={`Participant ${element}`} />
+                            <Tab label={`Participant ${element}`} {...a11yProps(element)}/>
                         )}
                     </Tabs>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    {/* Change this editor to the markdown viewer */}
-                    <Editor
-                        height="75vh" // By default, it fully fits with its parent
-                        theme={theme}
-                        language={"python"}
-                        loading={<Loader />}
-                        value={examples["python"]}
-                        editorDidMount={handleEditorDidMount}/>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    {/* Here is the editor. It's contents should change depending on which participant is selected */}
-                    <Editor
-                    height="75vh" // By default, it fully fits with its parent
-                    theme={theme}
-                    language={"python"}
-                    loading={<Loader />}
-                    value={examples["python"]}
-                    editorDidMount={handleEditorDidMount}/>
-                </Grid>
+                    {(Array.from({length: numOfParticipants}, (_, i) => i + 1)).map(element =>
+                        <TabPanel value={selectedTab} index={element - 1}>
+                            <button onClick={toggleTheme} disabled={!isEditorReady}>
+                                Toggle theme
+                            </button>
+                        <Grid container direction="row">
+                            <Grid item xs={12} md={6}>
+                                {/* Change this editor to the markdown viewer */}
+                                <Editor
+                                    height="75vh"
+                                    width = "100vh" // By default, it fully fits with its parent
+                                    theme={theme}
+                                    language={"python"}
+                                    loading={<Loader />}
+                                    value={examples["python"]}
+                                    editorDidMount={handleEditorDidMount}/>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                {/* Here is the editor. It's contents should change depending on which participant is selected */}
+                                <ControlledEditor
+                                    height="75vh"
+                                    width = "100vh" // By default, it fully fits with its parent
+                                    theme={theme}
+                                    language={"python"}
+                                    loading={<Loader />}
+                                    value={user1}
+                                    onChange={handleEditorChange}
+                                    editorDidMount={handleEditorDidMount}/>
+                            </Grid>
+                        </Grid>
+                        </TabPanel>
+                    )}
             </Grid>
             {/* <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
                 <div key="a" style={{backgroundColor: "grey"}}>a</div>
@@ -220,7 +299,6 @@ export const CodeEditor: React.FunctionComponent = () => {
 //       <AppContainer>
 //         <Title>Markdown Editor</Title>
 //         <EditorContainer>
-//           <MarkedInput />
 //           <Result />
 //         </EditorContainer>
 //       </AppContainer>
