@@ -12,16 +12,30 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            outline: 'none',
-
+            outline: 'none'
         },
         paper: {
-            backgroundColor: theme.palette.background.paper,
-            border: '2px solid #000',
-            boxShadow: theme.shadows[5],
-            padding: theme.spacing(2, 4, 3),
-
+            minWidth: "335px", 
+            maxWidth: "700px", 
+            margin: "auto", 
+            outline: "none", 
+            padding: "15px"
         },
+        header:{
+            display: "flex", 
+            justifyContent: "space-between"
+        },
+        title: {
+            margin: "10px" 
+        },
+        generalInput:{
+            textAlign: "center",
+            padding: theme.spacing(2),
+            color: theme.palette.text.secondary
+        },
+        update: {
+            margin: 10
+        }
     }),
 );
 
@@ -99,45 +113,45 @@ export const EventsModal: React.FC<eventProps> = ({ open, setOpen, startDateRef,
             BackdropProps={{ timeout: 500, }}
         >
             <Fade in={open}>
-                <Paper style={{ minWidth: "335px", maxWidth: "700px", margin: "auto", outline: "none", padding: "15px" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <h3 style={{ margin: "10px" }}>Create/Edit Event</h3>
+                <Paper className={classes.paper}>
+                    <div className={classes.header}>
+                        <h3 className={classes.title}>Create/Edit Event</h3>
                         <IconButton color="secondary" onClick={handleClose}>
                             <CloseIcon />
                         </IconButton>
                     </div>
                     <form ref={formRef}>
                         <Grid container direction="row" justify="center" style={{ maxWidth: '100%' }} spacing={2}>
-                            <Grid xs={4} item style={{ textAlign: "center" }}>
+                            <Grid xs={4} className={classes.generalInput} item>
                                 <TextField required label="Event Title" onChange={onTextFieldUpdate(setEventTitle)} />
                             </Grid>
-                            <Grid xs={4} item style={{ textAlign: "center" }}>
+                            <Grid xs={4} className={classes.generalInput} item>
                                 <TextField required label="Interviewers" onChange={onTextFieldUpdate(setInterviewers)} />
                             </Grid>
-                            <Grid xs={4} item style={{ textAlign: "center" }}>
+                            <Grid xs={4} className={classes.generalInput} item>
                                 <TextField required label="Candidates" onChange={onTextFieldUpdate(setCandidates)} />
                             </Grid>
-                            <Grid xs={4} item style={{ textAlign: "center" }}>
+                            <Grid xs={4} className={classes.generalInput} item>
                                 <TextField required value={startDate || ""} helperText="Start Date" type="date" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setStartDate)} />
                             </Grid>
-                            <Grid xs={4} item style={{ textAlign: "center" }}>
+                            <Grid xs={4} className={classes.generalInput} item>
                                 <TextField required value={startTime || ""} helperText="Start Time" type="time" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setStartTime)} />
                             </Grid>
-                            <Grid xs={4} item style={{ textAlign: "center" }}>
+                            <Grid xs={4} className={classes.generalInput} item>
                                 <TextField required label="Problem" onChange={onTextFieldUpdate(setProblem)} />
                             </Grid>
-                            <Grid xs={4} item style={{ textAlign: "center" }}>
+                            <Grid xs={4} className={classes.generalInput} item>
                                 <TextField required value={endDate || ""} helperText="End Date" type="date" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setEndDate)} />
                             </Grid>
-                            <Grid xs={4} item style={{ textAlign: "center" }}>
+                            <Grid xs={4} className={classes.generalInput} item>
                                 <TextField required value={endTime || ""} helperText="End Time" type="time" InputLabelProps={{ shrink: true }} onChange={onTextFieldUpdate(setEndTime)} />
                             </Grid>
-                            <Grid xs={4} item style={{ textAlign: "center" }}>
+                            <Grid xs={4} className={classes.generalInput} item>
                                 <TextField required label="Language" onChange={onTextFieldUpdate(setLanguage)} />
                             </Grid>
                         </Grid>
                         <Grid container direction="column" alignContent="center" spacing={1}>
-                            <Grid xs={4} item style={{ padding: 10 }}>
+                            <Grid xs={4} className={classes.update} item>
                                 <Button variant="contained" onClick={() => { onSubmit(formRef) }}>
                                     Update
                       </Button>
