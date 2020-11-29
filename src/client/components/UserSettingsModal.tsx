@@ -87,7 +87,7 @@ export const UserSettingsModal: React.FC<Props> = ({open, setOpen, data}) => {
                 <Typography variant="h5">
                     Change Password:
                 </Typography>
-                <TextField id="old-password" label="Enter Old Password" autoFocus value={oldPassword} className={classes.textField} onChange={onTextFieldUpdate(setOldPassword)} ></TextField>
+                <TextField id="old-password" label="Enter Old Password" autoFocus value={oldPassword} className={classes.textField} onChange={onTextFieldUpdate(setOldPassword)} type="password"></TextField>
                 <TextField id="new-password" label="Enter New Password" value={newPassword} onChange={onTextFieldUpdate(setNewPassword)} className={classes.textField} helperText={!properPassword() ? 'Password must be between 9 and 255 characters' : ''} error={!properPassword()} type="password"></TextField>
                 <TextField id="confirm-password" label="Confirm Password" value={setConfirmPassword} onChange={onTextFieldUpdate(setConfirmPassword)} className={classes.textField} helperText={!areSame(newPassword, confirmPassword) ? 'Passwords do not match' : ''} error={!areSame(newPassword, confirmPassword)} type="password"></TextField>
                 <Button onClick={() => handleConfirmPassword(oldPassword, newPassword, confirmPassword)}>
