@@ -1,5 +1,23 @@
 import React, { useState } from "react";
-import { Card, TextField, Button, CardContent } from "@material-ui/core";
+import { makeStyles, TextField, Button, Paper, Tabs, Tab, Grid } from "@material-ui/core";
+import { createStyles, Theme } from '@material-ui/core/styles';
+import { useRegisterMutation } from "../generated/graphql";
+import { RouteComponentProps } from "react-router-dom";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    textField: {
+        width: '100%',
+    },
+    paper: {
+        display: 'flex',
+        minWidth: "500px",
+        maxWidth: "800px",
+        margin: "auto",
+        padding: "10px"
+    }
+  }),
+);
 
 const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
     return (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -7,16 +25,30 @@ const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string
     };
 }
 
-interface SignUpProps{
+export const SignUp: React.FC<RouteComponentProps> = ({history}) => {
 
-}
-
-export const SignUp: React.FC<SignUpProps> = () => {
     const [name, setName] = useState("");
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmedPassword, setConfirmedPassword] = useState("");
     const [email, setEmail] = useState("");
+    const [confirmedEmail, setConfirmedEmail] = useState("");
+    const [signup] = useRegisterMutation();
+    const classes = useStyles({});
 
+    const areSame = (confirmed: string, regular: string) => {
+        return confirmed == regular || confirmed === "";
+    }
+    
+    const properEmail = () => {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase()) || email === "";
+    }
+    
+    const properPassword = () => {
+        return ((password.length > 9 && password.length < 255) || password.length == 0); 
+    }
+    
     const printData = (...args) => {
         for(let arg of args)
         {
@@ -24,18 +56,52 @@ export const SignUp: React.FC<SignUpProps> = () => {
         }
     }
 
+    const submitForm = async () => {
+        if (!(email === confirmedEmail && password === confirmedPassword && properEmail() && properPassword())) {
+            // Reject, don't even try to register
+            console.log("Info does not fit formatting");
+            return;
+        }
+        const response = await signup({
+            variables: {
+                name,
+                email,
+                password
+            }
+        })
+        history.push("/")
+    }
+
     return(
-        <div>
-            <h3>SignUp</h3>
-            
-            <Card>
-                <CardContent>
-                    <TextField label="User Name" onChange={onTextFieldUpdate(setUserName)}></TextField>
-                    <Button onClick={()=>{printData(name, userName, password, email)}}>
-                        Test
+        <Paper className={classes.paper}>
+            <Grid container direction="column" alignContent="center" alignItems="center" spacing={1}>
+                <Grid xs={12} item>
+                    <Tabs indicatorColor="primary" textColor="primary" variant="fullWidth" value={1}>
+                        <Tab label="Login" href="/login"/>
+                        <Tab label="Sign Up" />
+                    </Tabs>
+                </Grid>
+                <Grid xs={12} item>
+                    <TextField id="name" label="Name" autoFocus value={name} className={classes.textField} onChange={onTextFieldUpdate(setName)}></TextField>
+                </Grid>
+                <Grid xs={12} item>
+                    <TextField id="email" label="Email" value={email} onChange={onTextFieldUpdate(setEmail)} className={classes.textField} helperText={!properEmail() ?  'Email is Invalid' : ''} error={!properEmail()}></TextField>
+                </Grid>
+                <Grid xs={12} item>
+                    <TextField id="confirm-email" label="Confirm Email" value={confirmedEmail} onChange={onTextFieldUpdate(setConfirmedEmail)} className={classes.textField} helperText={!areSame(confirmedEmail, email) ? 'Emails do not match' : ''} error={!areSame(confirmedEmail, email)}></TextField>
+                </Grid>
+                <Grid xs={12} item>
+                    <TextField id="password" label="Password" value={password} onChange={onTextFieldUpdate(setPassword)} className={classes.textField} helperText={!properPassword() ? 'Password must be between 9 and 255 characters' : ''} error={!properPassword()} type="password"></TextField>
+                </Grid>
+                <Grid xs={12} item >
+                    <TextField id="confirm-password" label="Confirm Password" value={confirmedPassword} onChange={onTextFieldUpdate(setConfirmedPassword)} className={classes.textField} helperText={!areSame(confirmedPassword, password) ? 'Passwords do not match' : ''} error={!areSame(confirmedPassword, password)} type="password"></TextField>
+                </Grid>
+                <Grid xs={12} item>
+                    <Button variant="contained" onClick={submitForm}>
+                        Sign Up
                     </Button>
-                </CardContent>
-            </Card>
-        </div>
+                </Grid>
+            </Grid>
+        </Paper>
     );
 }
