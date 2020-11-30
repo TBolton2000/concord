@@ -1,13 +1,9 @@
 import React, { useState, useEffect, Component } from "react";
 import CustomTabsHook from "./editor_comps/AddAndDeleteTab";
-import { TabLink, TabContent } from "react-tabs-redux";
 import Editor from '@monaco-editor/react';
 import { ClockLoader as Loader } from "react-spinners";
 import examples from "./editor_comps/examples";
 import BasicLayout from "./editor_comps/BasicLayout"
-import GridLayout from 'react-grid-layout';
-import "../../../node_modules/react-grid-layout/css/styles.css";
-import "../../../node_modules/react-resizable/css/styles.css";
 import { Grid, Tab, Tabs, Typography, Box } from "@material-ui/core";
 import { ControlledEditor } from "@monaco-editor/react";
 import { Result } from './editor_comps/Result';
