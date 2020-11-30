@@ -8,6 +8,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import { useContactUsMutation} from '../generated/graphql';
 
 
+const MySwal = withReactContent(Swal)
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -39,12 +41,22 @@ const useStyles = makeStyles((theme: Theme) =>
         comment: {
             display: 'flex', 
             flexWrap: 'wrap'
-        }
+        },
+        confirm: {
+            textAlign: "center"
+        },
     }),
 );
 
 const onTextFieldUpdate = (toUpdate: React.Dispatch<React.SetStateAction<string>>) => {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
+        toUpdate(e.target.value);
+    };
+}
+
+const resetTextField = (toUpdate: React.Dispatch<React.SetStateAction<string>>) => {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.target.value = '';
         toUpdate(e.target.value);
     };
 }
@@ -96,7 +108,7 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
                 <h2>Contact Us</h2>
                 <DialogContentText>Let us know how we're doing</DialogContentText>
                 </div>
-                <form ref={formRef}>
+                <form id="contactForm" ref={formRef}>
                     <Grid container direction="row" justify="space-evenly" alignContent="center" spacing={2}>
                         <Grid spacing={2}>
                             <Grid xs item>

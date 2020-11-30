@@ -6,7 +6,6 @@ import { Card, CardContent } from "@material-ui/core";
 import { Calendar, momentLocalizer, View, DateLocalizer } from "react-big-calendar"
 
 import * as dates from "../../../node_modules/react-big-calendar/lib/utils/dates"
-
 import "!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css"
 
 
