@@ -1,4 +1,4 @@
-import { Arg, Ctx, Field, Int, Mutation, ObjectType, Query, Resolver, UseMiddleware } from "type-graphql";
+import { Arg, Ctx, Field, Int, Mutation, ObjectType, Query, Resolver, UseMiddleware, InputType } from "type-graphql";
 import { hash, compare } from "bcryptjs";
 import { User } from './entity/User';
 import { createAccessToken, createRefreshToken } from './auth';
@@ -9,6 +9,18 @@ import crypto from "crypto";
 import { getConnection } from 'typeorm';
 import { verify } from 'jsonwebtoken';
 import nodemailer from "nodemailer";
+
+@InputType()
+export class UpdateUserInfo {
+  @Field({ nullable: true })
+  name?: string;
+
+  @Field({ nullable: true })
+  email?: string;
+
+  @Field({ nullable: true })
+  password?: string;
+}
 
 @ObjectType()
 class LoginResponse {
@@ -212,7 +224,29 @@ export class UserResolver {
 
         smtpTransport.sendMail(mailOptions);
         console.log('mail sent');
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
 
+    
+    @Mutation(() => Boolean)
+    @UseMiddleware(isAuth)
+    async changePassword(
+        @Arg("oldPassword") oldPassword: string,
+        @Arg("newPassword") newPassword: string,
+        @Ctx() {payload}: MyContext
+    ) {  
+      try {
+        const user = await User.findOne(payload.userId)
+        const valid = await compare(oldPassword, user.password)
+        if (!valid) {
+            throw new Error("Old Password is not Correct");
+        }
+        await User.update(payload.userId, {
+            password: await hash(newPassword, 12)
+        })
      } catch (error) {
          console.log(error);
          return false;

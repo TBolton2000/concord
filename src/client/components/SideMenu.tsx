@@ -72,6 +72,12 @@ export const SideMenu: React.FunctionComponent = () => {
           </ListItemIcon>
           <ListItemText primary='Sign Up' />
         </ListItem>
+        <ListItem button component={NavLinkMui} to='/contact-us'>
+          <ListItemIcon>
+            <LazyIcon />
+          </ListItemIcon>
+          <ListItemText primary='Contact Us' />
+        </ListItem>
         <ListItem button component={NavLinkMui} to='/dashboard-upper'>
           <ListItemIcon>
             <StyledIcon />

@@ -1,8 +1,10 @@
 import "dotenv/config";
-import express from 'express';
 import "reflect-metadata";
-import { ApolloServer } from 'apollo-server-express';
+
+import express from 'express';
 import path from 'path';
+
+import { ApolloServer } from 'apollo-server-express';
 import { apiRouter } from './routes/api-router';
 import { pagesRouter } from './routes/pages-router';
 import { staticsRouter } from './routes/statics-router';
@@ -18,19 +20,19 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 console.log(`config: ${JSON.stringify(config, null, 2)}`);
 console.log(`*******************************************`);
 
-(async () =>{
+(async () => {
     const app = express();
     app.set('view engine', 'ejs');
 
     app.use(cookieParser());
-    
+
     await createConnection();
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
             resolvers: [UserResolver, EventResolver]
         }),
-        context: ({ req, res }) => ( {req, res} )
+        context: ({ req, res }) => ({ req, res })
     });
 
     apolloServer.applyMiddleware({ app });
