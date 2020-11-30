@@ -154,7 +154,7 @@ export const EventsModal: React.FC<eventProps> = ({ open, setOpen, startDateRef,
                             <Grid xs={4} className={classes.update} item>
                                 <Button variant="contained" onClick={() => { onSubmit(formRef) }}>
                                     Update
-                                </Button>
+                      </Button>
                             </Grid>
                         </Grid>
                     </form>
