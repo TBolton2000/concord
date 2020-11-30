@@ -3,6 +3,7 @@ import { makeStyles, TextField, Button, Paper, Grid, Typography } from "@materia
 import { createStyles, Theme } from '@material-ui/core/styles';
 import { useRegisterMutation } from "../generated/graphql";
 import { RouteComponentProps } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,14 +72,27 @@ export const SignUp: React.FC<RouteComponentProps> = ({history}) => {
             console.log("Info does not fit formatting");
             return;
         }
-        const response = await signup({
-            variables: {
-                name,
-                email,
-                password
-            }
-        })
-        history.push("/")
+        try{
+            const response = await signup({
+                variables: {
+                    name,
+                    email,
+                    password
+                }
+            })
+            history.push("/")
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "Your account has successfully been created"
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "Something went wrong creating your account, try again",
+            });
+        }
     }
 
     return(
