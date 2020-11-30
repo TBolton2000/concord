@@ -1,8 +1,8 @@
 import React from "react"
-import { Grid, Card, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, Accordion, AccordionDetails, AccordionSummary, IconButton } from "@material-ui/core"
+import { Grid, Card, CardMedia, CardContent, Typography, makeStyles, Accordion, AccordionDetails, AccordionSummary, IconButton } from "@material-ui/core"
 import { Email, ExpandMore, GitHub } from '@material-ui/icons';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     accordion: {
         flexGrow: 1,
     },
