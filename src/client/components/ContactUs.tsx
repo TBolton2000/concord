@@ -77,7 +77,6 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
 
     const onSubmit = async (formRef) => {
         // printData(firstName, lastName, phone, email, comment);
-        const success = await contactUs({variables: {firstName, lastName, phoneNumber, email, comment}});
         let allInputsFilled = formRef.current.reportValidity();
         const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
@@ -91,6 +90,9 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
         });
 
         if (allInputsFilled) {
+
+            const success = await contactUs({variables: {firstName, lastName, phoneNumber, email, comment}});
+            
             setFirstName("");
             setLastName("");
             setPhone("");
