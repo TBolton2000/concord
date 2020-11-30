@@ -54,6 +54,12 @@ export const CodeEditor: React.FunctionComponent = () => {
     const [user3, setUser3]  = useState('');
     const [user4, setUser4]  = useState('');
     const [user5, setUser5]  = useState('');
+    var userDict = {};
+    userDict['user_1'] = user1;
+    userDict['user_2'] = user2;
+    userDict['user_3'] = user3;
+    userDict['user_4'] = user4;
+    userDict['user_5'] = user5;
     
     // const changeHandler = (e) => {
     //     console.log(e);
@@ -82,18 +88,24 @@ export const CodeEditor: React.FunctionComponent = () => {
     //     {i: 'c', x: 4, y: 0, w: 1, h: 2}
     //   ];
 
-    const handleEditorChange = (ev, value) => {
-        user1 = value
+    const handleEditorChange = (ev, value, selectedTab) => {
+        console.log(selectedTab);
+        if (selectedTab === 1){
+            setUser1(value);
+        }
+        else if (selectedTab === 2){
+            setUser2(value);
+        }
+        else if (selectedTab === 3) {
+            setUser1(value);
+        }
+        else if (selectedTab === 4) {
+            setUser1(value);
+        }
+        else if (selectedTab === 5) { 
+            setUser1(value);
+        }
     }
-
-    useEffect(() => {
-        
-        setUser1('hello');
-        setUser2('urur');
-        setUser3('dddd');
-        setUser4('helddlo');
-        setUser5('hello');
-    }, [user1, user2, user3, user4, user5]);
 
     return (
         <div className="CodeEditor">
@@ -130,8 +142,8 @@ export const CodeEditor: React.FunctionComponent = () => {
                                     theme={theme}
                                     language={"python"}
                                     loading={<Loader />}
-                                    value={user1}
-                                    onChange={handleEditorChange}
+                                    value={userDict['user_' + selectedTab]}
+                                    onChange={ handleEditorChange(selectedTab) }
                                     editorDidMount={handleEditorDidMount}/>
                             </Grid>
                         </Grid>
