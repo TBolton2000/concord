@@ -8,14 +8,23 @@ import { Grid, Tab, Tabs, Typography, Box, Button, TextField } from "@material-u
 import { ControlledEditor } from "@monaco-editor/react";
 import { Result } from './editor_comps/Result';
 import axios from "axios";
+import { RouteComponentProps } from "react-router-dom";
 
-export const CodeEditor: React.FunctionComponent = () => {
+export const CodeEditor: React.FunctionComponent<RouteComponentProps> = ({}) => {
     const [isEditorReady, setIsEditorReady] = useState(false);
     const numOfParticipants = 5;
     const [selectedTab, setSelectedTab] = React.useState(0);
-    const [data, setData] = useState(Array(numOfParticipants+1).fill(""));
+    const [data, setData] = useState([
+        "import " + (Array.from({ length: numOfParticipants }, (_, i) => i + 1)).map(element => "participant" + element).join(", ") + "\n",
+        ...Array(numOfParticipants).fill(
+            "# define functions here" +
+            "\n\n\n" + 
+            "if __name__ == \"__main__\":\n" +
+            "\t# put individual test code here\n" +
+            "\tprint(\"Hello World!\")"
+        )]);
     const [terminal, setTerminal] = useState("");
-
+    console.log(data);
     const handleChange = (event, newValue) => {
         setSelectedTab(newValue);
     }
