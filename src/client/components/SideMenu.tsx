@@ -90,6 +90,12 @@ export const SideMenu: React.FunctionComponent = () => {
           </ListItemIcon>
           <ListItemText primary='Dashboard Lower' />
         </ListItem>
+        <ListItem button component={NavLinkMui} to='/code-editor'>
+          <ListItemIcon>
+            <RouterIcon />
+          </ListItemIcon>
+          <ListItemText primary='CodeEditor' />
+        </ListItem>
       </List>
     </Drawer>
   );
