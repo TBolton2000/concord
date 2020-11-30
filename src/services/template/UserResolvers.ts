@@ -9,7 +9,6 @@ import crypto from "crypto";
 import { getConnection } from 'typeorm';
 import { verify } from 'jsonwebtoken';
 import nodemailer from "nodemailer";
-import { userInfo } from 'os';
 
 @ObjectType()
 class LoginResponse {
