@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -74,14 +74,21 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
     }
 
     const onSubmit = (formRef) => {
-        printData(firstName, lastName, phone, email, comment);
+        // printData(firstName, lastName, phone, email, comment);
         if (formRef.current.reportValidity()) {
+            
             Swal.fire({
-                icon: "success",
-                title: "Submitted!",
+                icon: 'success',
+                title: 'Success',
                 text: "We'll get back to you soon",
-              });
-              resetTextField(setComment);
+            });
+
+            setFirstName("");
+            setLastName("");
+            setPhone("");
+            setEmail("");
+            setComment("");
+            
         }
         else {
             return formRef.current.reportValidity();
@@ -102,22 +109,22 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
                     <Grid container direction="row" justify="space-evenly" alignContent="center" spacing={2}>
                         <Grid spacing={2}>
                             <Grid xs item>
-                                <TextField required label="First Name" className={classes.generalInput} onChange={onTextFieldUpdate(setFirstName)} />
+                                <TextField required label="First Name" className={classes.generalInput} onChange={onTextFieldUpdate(setFirstName)} value={firstName} />
                             </Grid>
                             <Grid xs item>
-                                <TextField required label="Email" helperText="We won't share your email" className={classes.generalInput} onChange={onTextFieldUpdate(setEmail)} />
+                                <TextField required label="Email" helperText="We won't share your email" className={classes.generalInput} onChange={onTextFieldUpdate(setEmail)} value={email} />
                             </Grid>
                         </Grid> 
                         <Grid spacing={2}>
                             <Grid xs item>
-                                <TextField required label="Last Name" className={classes.generalInput} onChange={onTextFieldUpdate(setLastName)} />
+                                <TextField required label="Last Name" className={classes.generalInput} onChange={onTextFieldUpdate(setLastName)} value={lastName}/>
                             </Grid>
                             <Grid xs item>
-                                <TextField required label="Phone" className={classes.generalInput} onChange={onTextFieldUpdate(setPhone)} />
+                                <TextField required label="Phone" className={classes.generalInput} onChange={onTextFieldUpdate(setPhone)} value={phone}/>
                             </Grid>
                         </Grid> 
                         <Grid xs={10} className={classes.submit} item>
-                            <TextField required multiline rows={6} className={classes.comment} label="What's on Your Mind?" onChange={onTextFieldUpdate(setComment)} />
+                            <TextField required multiline rows={6} className={classes.comment} label="What's on Your Mind?" onChange={onTextFieldUpdate(setComment)} value={comment}/>
                         </Grid>   
                     </Grid>
                     <Grid container direction="column" alignContent="center" spacing={1}>

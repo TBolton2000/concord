@@ -278,10 +278,20 @@ export const Home: React.FunctionComponent = () => {
           </div>
           <div>
             <Typography variant="h6" align="center" gutterBottom>
-              Call us at:
+              Call Us At:
             <a href="tel:9798455851">
                 <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
                   (979) 845-5851
+                </Typography>
+            </a>
+            </Typography>
+          </div>
+          <div>
+            <Typography variant="h6" align="center" gutterBottom>
+              Email Us At Our
+            <a href="/contact-us">
+                <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+                  Contact Form
                 </Typography>
             </a>
             </Typography>

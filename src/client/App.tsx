@@ -9,10 +9,13 @@ import { StyledComponentsExample } from './components/StyledComponentsExample';
 import { UsersList } from './components/UsersList';
 import { Login } from './components/Login';
 import { SignUp } from './components/Signup';
+import { ForgotPassword } from './components/ForgotPassword';
+import { ResetPassword } from './components/ResetPassword';
 import { ContactUs } from './components/ContactUs';
 import { DashboardCalendar } from './components/DashboardCalendar';
 import { DashboardAllEvents } from './components/DashboardAllEvents';
 import { setAccessToken } from './components/accessToken';
+import { CodeEditor } from './components/CodeEditor';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,7 +53,7 @@ export const App = () => {
       <div className={classes.root}>
         <CssBaseline />
         <Header />
-        <SideMenu />
+        {/* <SideMenu /> */}
         <main className={classes.main}>
           <div className={classes.toolbar} />
           <Switch>
@@ -58,10 +61,13 @@ export const App = () => {
             <Route path='/users-list' component={UsersList} />
             <Route path='/styled-example' component={StyledComponentsExample} />
             <Route path='/login' component={Login} />
+            <Route path='/code-editor' component={CodeEditor} />
             <Route path='/signup' component={SignUp} />
             <Route path='/contact-us' component={ContactUs} />
             <Route path='/dashboard-upper' component={DashboardCalendar} />
             <Route path='/dashboard-lower' component={DashboardAllEvents} />
+            <Route path='/forgotpassword' component={ForgotPassword} />
+            <Route path='/resetpassword/:token' component={ResetPassword} />
           </Switch>
         </main>
       </div>
