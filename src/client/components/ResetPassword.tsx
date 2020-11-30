@@ -6,16 +6,28 @@ import { useParams, RouteComponentProps } from "react-router-dom";
 import { createStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+  createStyles({
+    root: {
+        margin: "10px",
+        height: "80vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center"
+    },
     textField: {
         width: '100%',
     },
     paper: {
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        margin: "auto", 
+        outline: "none", 
+        padding: "15px",
+        display: 'flex',
         minWidth: "500px",
         maxWidth: "800px",
-        margin: "auto",
-        padding: "10px"
-    }})
+    }
+  }),
 );
 
 const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
@@ -48,7 +60,7 @@ export const ResetPassword: React.FC<RouteComponentProps> = () => {
     }
     
     return(
-        <div>
+        <Grid container className={classes.root}>
             <Paper className={classes.paper}>
                 <Grid container direction="column" alignContent="center" alignItems="center" spacing={1}>
                     <Grid xs={12} item>
@@ -69,6 +81,6 @@ export const ResetPassword: React.FC<RouteComponentProps> = () => {
                     </Grid>
                 </Grid>
             </Paper>
-        </div>
+        </Grid>
     );
 };
