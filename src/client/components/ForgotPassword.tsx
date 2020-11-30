@@ -5,16 +5,28 @@ import Grid from '@material-ui/core/Grid';
 import { useResetPasswordTokenMutation } from '../generated/graphql';
 
 const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+  createStyles({
+    root: {
+        margin: "10px",
+        height: "80vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center"
+    },
     textField: {
         width: '100%',
     },
     paper: {
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        margin: "auto", 
+        outline: "none", 
+        padding: "15px",
+        display: 'flex',
         minWidth: "500px",
         maxWidth: "800px",
-        margin: "auto",
-        padding: "10px"
-    }})
+    }
+  }),
 );
 
 const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
@@ -35,22 +47,24 @@ export const ForgotPassword: React.FunctionComponent = () => {
     }
 
     return(
-        <Paper className={classes.paper}>
-            <Grid container direction="column" alignContent="center" alignItems="center" spacing={1}>
-                <Grid xs={12} item>
-                    <Typography variant="h5">
-                        Forgot Password:
-                    </Typography>
+        <Grid container className={classes.root}>
+            <Paper className={classes.paper}>
+                <Grid container direction="column" alignContent="center" alignItems="center" spacing={1}>
+                    <Grid xs={12} item>
+                        <Typography variant="h5">
+                            Forgot Password:
+                        </Typography>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Enter Account Email" value={email} onChange={onTextFieldUpdate(setEmail)} type="email" className={classes.textField}></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <Button variant="contained" href="/forgotpassword" onClick={() => resetToken(email)}>
+                            Send Email
+                        </Button>
+                    </Grid>
                 </Grid>
-                <Grid xs={12} item>
-                    <TextField label="Enter Account Email" value={email} onChange={onTextFieldUpdate(setEmail)} type="email" className={classes.textField}></TextField>
-                </Grid>
-                <Grid xs={12} item>
-                    <Button variant="contained" href="/forgotpassword" onClick={() => resetToken(email)}>
-                        Send Email
-                    </Button>
-                </Grid>
-            </Grid>
-        </Paper>
+            </Paper>
+        </Grid>
     );
 };
