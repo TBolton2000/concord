@@ -198,7 +198,12 @@ export const Home: React.FunctionComponent = () => {
               title='Trevor Bolton'
               greeting="Greetings!"
               image="../../assets/images/Trevor.jpg"
-              description=""
+              description="
+              I am a senior undergraduate student in Computer Science 
+              at Texas A&M graduating in May 2021. I will continue on 
+              Masters in Computer Science as part of the Honors Fast Track 
+              Program. I enjoy building new software projects and learning 
+              new skills!"
               github="https://github.com/TBolton2000"
               linkedin="https://www.linkedin.com/in/trevor-bolton-428158192/"
               email="mailto:tbolton2000@tamu.edu?subject=Howdy!"
