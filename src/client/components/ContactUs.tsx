@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Button, DialogContentText, Grid, Paper, TextField } from '@material-ui/core';
@@ -60,9 +62,14 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
     }
 
     const onSubmit = (formRef) => {
-        printData(firstName, lastName, phone, email, comment);
+        // printData(firstName, lastName, phone, email, comment);
         if (formRef.current.reportValidity()) {
-            formRef.target.reset();
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "We'll get back to you soon",
+              });
         }
         else {
             return formRef.current.reportValidity();
