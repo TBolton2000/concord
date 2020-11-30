@@ -211,7 +211,7 @@ export const Home: React.FunctionComponent = () => {
               greeting="Hello!"
               image="../../assets/images/Shilleh.jpg"
               description="
-                  My name is Mahmood Shilleh, a.k.a Shilleh, I am a Graduate
+                  I am a Graduate
                   Student at Texas A&M in Computer Science. I received my
                   undergraduate degree in Mechanical Engineering from the
                   University at Buffalo. My interests include coding,
