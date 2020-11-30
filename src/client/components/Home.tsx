@@ -258,9 +258,13 @@ export const Home: React.FunctionComponent = () => {
             <Cards
               title='Gowtham Batchala'
               greeting="Hi!"
-              image="../../assets/images/Default.jpg"
+              image="../../assets/images/Gowtham.jpg"
               description="
-                  ..."
+              I am a Masters graduate student in Electrical Engineering at 
+              Texas A&M University. Did my Batchelor's in Engineering Physics 
+              dept from Indian Institute of Technology Bombay. My areas of 
+              Interest: Computer vision, AI, Reinforced Learning. My hobbies 
+              are watching anime, playing badminton."
               github="https://github.com/Gowtham153"
               linkedin="https://www.linkedin.com/in/gowtham-batchala-a50948b2/"
               email="mailto:gowtham153@tamu.edu?subject=Howdy!"
