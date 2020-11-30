@@ -187,6 +187,41 @@ export class UserResolver {
         return true;
     }
 
+
+    @Mutation(() => Boolean)
+    async contactUs(
+        @Arg("firstName") firstName: string,
+        @Arg("lastName") lastName: string,
+        @Arg("phoneNumber") phoneNumber: string,
+        @Arg("email") email: string,
+        @Arg("comment") comment: string,
+    ) {  
+      try {
+        if (comment === "") {
+            throw new Error("Comment is Trivial");
+        }
+        const smtpTransport = nodemailer.createTransport({
+            service: 'Gmail', 
+            auth: {
+              user: 'concordnoreply@gmail.com',
+              pass: process.env.EMAIL_PASSWORD,
+            }
+        });
+        const mailOptions = {
+            to: 'concordnoreply@gmail.com',
+            from: 'concordnoreply@gmail.com',
+            subject: 'CONTACT US FEEDBACK',
+            text: comment + '\n\n' + firstName + ' ' + lastName + '\n\n' + phoneNumber +  '\n\n' + email
+        };
+        smtpTransport.sendMail(mailOptions);
+        console.log('mail sent');
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+        return true;
+    }
+
     @Mutation(() => Boolean)
     async resetPassword(
         @Arg("newPassword") newPassword: string,
@@ -230,7 +265,6 @@ export class UserResolver {
         }
     }
 
-    
     @Mutation(() => Boolean)
     @UseMiddleware(isAuth)
     async changePassword(

@@ -43,6 +43,7 @@ export type Mutation = {
   login: LoginResponse;
   register: Scalars['Boolean'];
   resetPasswordToken: Scalars['Boolean'];
+  contactUs: Scalars['Boolean'];
   resetPassword: Scalars['Boolean'];
   changePassword: Scalars['Boolean'];
   add: Scalars['Boolean'];
@@ -71,6 +72,15 @@ export type MutationRegisterArgs = {
 
 export type MutationResetPasswordTokenArgs = {
   email: Scalars['String'];
+};
+
+
+export type MutationContactUsArgs = {
+  comment: Scalars['String'];
+  email: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  lastName: Scalars['String'];
+  firstName: Scalars['String'];
 };
 
 
@@ -124,6 +134,20 @@ export type ChangePasswordMutationVariables = Exact<{
 
 
 export type ChangePasswordMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, '[object Object]'>
+);
+
+export type ContactUsMutationVariables = Exact<{
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  email: Scalars['String'];
+  comment: Scalars['String'];
+}>;
+
+
+export type ContactUsMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, '[object Object]'>
 );
@@ -241,6 +265,46 @@ export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export const ContactUsDocument = gql`
+    mutation contactUs($firstName: String!, $lastName: String!, $phoneNumber: String!, $email: String!, $comment: String!) {
+  contactUs(
+    firstName: $firstName
+    lastName: $lastName
+    phoneNumber: $phoneNumber
+    email: $email
+    comment: $comment
+  )
+}
+    `;
+export type ContactUsMutationFn = Apollo.MutationFunction<ContactUsMutation, ContactUsMutationVariables>;
+
+/**
+ * __useContactUsMutation__
+ *
+ * To run a mutation, you first call `useContactUsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useContactUsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [contactUsMutation, { data, loading, error }] = useContactUsMutation({
+ *   variables: {
+ *      firstName: // value for 'firstName'
+ *      lastName: // value for 'lastName'
+ *      phoneNumber: // value for 'phoneNumber'
+ *      email: // value for 'email'
+ *      comment: // value for 'comment'
+ *   },
+ * });
+ */
+export function useContactUsMutation(baseOptions?: Apollo.MutationHookOptions<ContactUsMutation, ContactUsMutationVariables>) {
+        return Apollo.useMutation<ContactUsMutation, ContactUsMutationVariables>(ContactUsDocument, baseOptions);
+      }
+export type ContactUsMutationHookResult = ReturnType<typeof useContactUsMutation>;
+export type ContactUsMutationResult = Apollo.MutationResult<ContactUsMutation>;
+export type ContactUsMutationOptions = Apollo.BaseMutationOptions<ContactUsMutation, ContactUsMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {

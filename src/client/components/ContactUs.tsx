@@ -5,6 +5,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Button, DialogContentText, Grid, Paper, TextField } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
+import { useContactUsMutation} from '../generated/graphql';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,11 +50,16 @@ const onTextFieldUpdate = (toUpdate: React.Dispatch<React.SetStateAction<string>
 }
 
 export const ContactUs: React.FC<RouteComponentProps> = () => {
+    const [contactUs] = useContactUsMutation();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [phone, setPhone] = useState("");
+    const [phoneNumber, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [comment, setComment] = useState("");
+
+    const handleContactUs = async (firstName, lastName, phoneNumber, email, comment) => {
+        return await contactUs({variables: {firstName, lastName, phoneNumber, email, comment}});
+    }
 
     const printData = (...args) => {
         for (let arg of args) {
@@ -108,7 +114,7 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
                                 <TextField required label="Last Name" className={classes.generalInput} onChange={onTextFieldUpdate(setLastName)} value={lastName}/>
                             </Grid>
                             <Grid xs item>
-                                <TextField required label="Phone" className={classes.generalInput} onChange={onTextFieldUpdate(setPhone)} value={phone}/>
+                                <TextField required label="Phone" className={classes.generalInput} onChange={onTextFieldUpdate(setPhone)} value={phoneNumber}/>
                             </Grid>
                         </Grid> 
                         <Grid xs={10} className={classes.submit} item>
@@ -117,7 +123,7 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
                     </Grid>
                     <Grid container direction="column" alignContent="center" spacing={1}>
                         <Grid className={classes.submit} item>
-                            <Button variant="contained" onClick={() => { onSubmit(formRef) }}>
+                            <Button variant="contained" onClick={() => handleContactUs(firstName, lastName, phoneNumber, email, comment) }>
                                 Submit
                             </Button>
                         </Grid>

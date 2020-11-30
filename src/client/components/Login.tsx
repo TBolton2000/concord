@@ -7,15 +7,25 @@ import { setAccessToken } from "./accessToken";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+        margin: "10px",
+        height: "80vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center"
+    },
     textField: {
         width: '100%',
     },
     paper: {
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        margin: "auto", 
+        outline: "none", 
+        padding: "15px",
         display: 'flex',
         minWidth: "500px",
         maxWidth: "800px",
-        margin: "auto",
-        padding: "10px"
     }
   }),
 );
@@ -65,31 +75,33 @@ export const Login: React.FC<RouteComponentProps> = ({history}) => {
     }
 
     return(
-        <Paper className={classes.paper}>
-            <Grid container direction="column" alignContent="center" alignItems="center" spacing={1}>
-                <Grid xs={12} item>
-                    <Tabs indicatorColor="primary" textColor="primary" variant="fullWidth" value={0}>
-                        <Tab label="Login" />
-                        <Tab label="Sign Up" href="/signup"/>
-                    </Tabs>
+        <Grid container className={classes.root}>
+            <Paper className={classes.paper}>
+                <Grid container direction="column" alignContent="center" alignItems="center" spacing={1}>
+                    <Grid xs={12} item>
+                        <Tabs indicatorColor="primary" textColor="primary" variant="fullWidth" value={0}>
+                            <Tab label="Login" />
+                            <Tab label="Sign Up" href="/signup"/>
+                        </Tabs>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Email" autoFocus value={email} className={classes.textField} onChange={onTextFieldUpdate(setEmail)}></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <TextField label="Password" value={password} className={classes.textField} onChange={onTextFieldUpdate(setPassword)} type="password"></TextField>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <Button variant="contained" onClick={submitForm}>
+                            Login
+                        </Button>
+                    </Grid>
+                    <Grid xs={12} item>
+                        <Link href='/forgotpassword'> 
+                            Forgot password?
+                        </Link> 
+                    </Grid>
                 </Grid>
-                <Grid xs={12} item>
-                    <TextField label="Email" autoFocus value={email} className={classes.textField} onChange={onTextFieldUpdate(setEmail)}></TextField>
-                </Grid>
-                <Grid xs={12} item>
-                    <TextField label="Password" value={password} className={classes.textField} onChange={onTextFieldUpdate(setPassword)} type="password"></TextField>
-                </Grid>
-                <Grid xs={12} item>
-                    <Button variant="contained" onClick={submitForm}>
-                        Login
-                    </Button>
-                </Grid>
-                <Grid xs={12} item>
-                    <Link href='/forgotpassword'> 
-                        Forgot password?
-                    </Link> 
-                </Grid>
-            </Grid>
-        </Paper> 
+            </Paper> 
+        </Grid>
     );
 }
