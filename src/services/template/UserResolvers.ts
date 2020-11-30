@@ -5,8 +5,10 @@ import { createAccessToken, createRefreshToken } from './auth';
 import { MyContext } from './MyContext';
 import { isAuth } from './isAuth';
 import { sendRefreshToken } from './sendRefreshToken';
+import crypto from "crypto";
 import { getConnection } from 'typeorm';
 import { verify } from 'jsonwebtoken';
+import nodemailer from "nodemailer";
 
 @InputType()
 export class UpdateUserInfo {
@@ -143,6 +145,91 @@ export class UserResolver {
 
         return true;
     }
+
+    @Mutation(() => Boolean)
+    async resetPasswordToken(
+        @Arg("email") email: string
+    ) {
+        const buf = crypto.randomBytes(20)
+        const token = buf.toString('hex');
+
+        try {
+            const user = await User.findOne({ email: email });
+            user.resetPasswordToken = token;
+            user.resetPasswordExpires = BigInt(Date.now() + 3600000);
+            await user.save()
+            const smtpTransport = nodemailer.createTransport({
+                service: 'Gmail', 
+                auth: {
+                  user: 'concordnoreply@gmail.com',
+                  pass: process.env.EMAIL_PASSWORD,
+                }
+            });
+
+            const mailOptions = {
+                to: user.email,
+                from: 'concordnoreply@gmail.com',
+                subject: 'Concord Password Reset',
+                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                  'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                    process.env.NODE_ENV !== 'production' ? "http://localhost:3000" + '/resetpassword/' + token + '\n\n' + 'If you did not request this, please ignore this email and your password will remain unchanged.\n' 
+                    : "https://concord-app.herokuapp.com/" + '/resetpassword/' + token + '\n\n' + 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+            };
+
+            smtpTransport.sendMail(mailOptions);
+            console.log('mail sent');
+
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+
+        return true;
+    }
+
+    @Mutation(() => Boolean)
+    async resetPassword(
+        @Arg("newPassword") newPassword: string,
+        @Arg("token") token: string,
+    ) {  
+      try {
+        if (token === "") {
+            throw new Error("Token is Invalid");
+        }
+        const user = await User.findOne({where: { resetPasswordToken: token }})
+        if (!user || Date.now() > user.resetPasswordExpires) {
+            throw new Error("Token Invalid");
+        }
+        await User.update(user, { 
+            password: await hash(newPassword, 12),
+            resetPasswordToken: "",
+            resetPasswordExpires: BigInt(0)
+        })
+
+        const smtpTransport = nodemailer.createTransport({
+            service: 'Gmail', 
+            auth: {
+              user: 'concordnoreply@gmail.com',
+              pass: process.env.EMAIL_PASSWORD,
+            }
+        });
+
+        const mailOptions = {
+            to: user.email,
+            from: 'concordnoreply@gmail.com',
+            subject: 'Your password has been changed',
+            text: 'Hello,\n\n' + 
+            'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+        };
+
+        smtpTransport.sendMail(mailOptions);
+        console.log('mail sent');
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
     
     @Mutation(() => Boolean)
     @UseMiddleware(isAuth)
@@ -164,6 +251,7 @@ export class UserResolver {
          console.log(error);
          return false;
      }
+    console.log('reset worked');
     return true
    }
 }

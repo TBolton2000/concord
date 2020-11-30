@@ -85,7 +85,7 @@ export const Login: React.FC<RouteComponentProps> = ({history}) => {
                     </Button>
                 </Grid>
                 <Grid xs={12} item>
-                    <Link href='/'> 
+                    <Link href='/forgotpassword'> 
                         Forgot password?
                     </Link> 
                 </Grid>
