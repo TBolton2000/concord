@@ -57,24 +57,21 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
     const [email, setEmail] = useState("");
     const [comment, setComment] = useState("");
 
-    const handleContactUs = async (firstName, lastName, phoneNumber, email, comment) => {
-        return await contactUs({variables: {firstName, lastName, phoneNumber, email, comment}});
-    }
-
     const printData = (...args) => {
         for (let arg of args) {
             console.log(arg);
         }
     }
 
-    const onSubmit = (formRef) => {
+    const onSubmit = async (formRef) => {
         // printData(firstName, lastName, phone, email, comment);
         if (formRef.current.reportValidity()) {
-            
+            const success = await contactUs({variables: {firstName, lastName, phoneNumber, email, comment}});
+
             Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: "We'll get back to you soon",
+                icon: success ? 'success' : 'error',
+                title: success ? 'Success' : 'Oops...',
+                text: success ? "We'll get back to you soon" : "Something went wrong, try again later.",
             });
 
             setFirstName("");
@@ -123,7 +120,7 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
                     </Grid>
                     <Grid container direction="column" alignContent="center" spacing={1}>
                         <Grid className={classes.submit} item>
-                            <Button variant="contained" onClick={() => handleContactUs(firstName, lastName, phoneNumber, email, comment) }>
+                            <Button variant="contained" onClick={() => onSubmit(formRef) }>
                                 Submit
                             </Button>
                         </Grid>
