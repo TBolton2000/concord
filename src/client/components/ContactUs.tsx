@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Button, DialogContentText, Grid, Paper, TextField } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
 
+
+const MySwal = withReactContent(Swal)
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -36,12 +40,22 @@ const useStyles = makeStyles((theme: Theme) =>
         comment: {
             display: 'flex', 
             flexWrap: 'wrap'
-        }
+        },
+        confirm: {
+            textAlign: "center"
+        },
     }),
 );
 
 const onTextFieldUpdate = (toUpdate: React.Dispatch<React.SetStateAction<string>>) => {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
+        toUpdate(e.target.value);
+    };
+}
+
+const resetTextField = (toUpdate: React.Dispatch<React.SetStateAction<string>>) => {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.target.value = '';
         toUpdate(e.target.value);
     };
 }
@@ -62,7 +76,12 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
     const onSubmit = (formRef) => {
         printData(firstName, lastName, phone, email, comment);
         if (formRef.current.reportValidity()) {
-            formRef.target.reset();
+            Swal.fire({
+                icon: "success",
+                title: "Submitted!",
+                text: "We'll get back to you soon",
+              });
+              resetTextField(setComment);
         }
         else {
             return formRef.current.reportValidity();
@@ -79,7 +98,7 @@ export const ContactUs: React.FC<RouteComponentProps> = () => {
                 <h2>Contact Us</h2>
                 <DialogContentText>Let us know how we're doing</DialogContentText>
                 </div>
-                <form ref={formRef}>
+                <form id="contactForm" ref={formRef}>
                     <Grid container direction="row" justify="space-evenly" alignContent="center" spacing={2}>
                         <Grid spacing={2}>
                             <Grid xs item>
