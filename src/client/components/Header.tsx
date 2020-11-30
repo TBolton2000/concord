@@ -5,15 +5,28 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { useMeQuery } from '../generated/graphql';
 import { UserSettingsModal } from './UserSettingsModal';
 
+import "../../../assets/css/Fonts.css"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
+      background: "#1761A0"
     },
     title: {
       flexGrow: 1,
     },
+    titleStyles: {
+      fontSize: 24,
+      fontFamily: 'Monoton'
+    },
+    titleImage: {
+      background: "white",
+      verticalAlign: "middle",
+      borderRadius: 34,
+      width: 34,
+      height: 34,
+    }
   }),
 );
 
@@ -32,8 +45,9 @@ export const Header: React.FunctionComponent = (props) => {
     return (
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Concord
+          <Typography variant="h6" className={classes.title}>   
+            <a href="/"><img className={classes.titleImage} src={".../../../assets/images/LogoOnly.png"}/></a>          
+            <Button color="inherit" className={classes.titleStyles} href="/">Concord</Button>
           </Typography>
           <div>
             {loading
