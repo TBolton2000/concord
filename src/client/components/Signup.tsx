@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles, TextField, Button, Paper, Tabs, Tab, Grid } from "@material-ui/core";
+import { makeStyles, TextField, Button, Paper, Grid, Typography } from "@material-ui/core";
 import { createStyles, Theme } from '@material-ui/core/styles';
 import { useRegisterMutation } from "../generated/graphql";
 import { RouteComponentProps } from "react-router-dom";
@@ -38,7 +38,6 @@ const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string
 export const SignUp: React.FC<RouteComponentProps> = ({history}) => {
 
     const [name, setName] = useState("");
-    const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -87,10 +86,9 @@ export const SignUp: React.FC<RouteComponentProps> = ({history}) => {
             <Paper className={classes.paper}>
                 <Grid container direction="column" alignContent="center" alignItems="center" spacing={1}>
                     <Grid xs={12} item>
-                        <Tabs indicatorColor="primary" textColor="primary" variant="fullWidth" value={1}>
-                            <Tab label="Login" href="/login"/>
-                            <Tab label="Sign Up" />
-                        </Tabs>
+                        <Typography variant="h5">
+                            Sign Up:
+                        </Typography>
                     </Grid>
                     <Grid xs={12} item>
                         <TextField id="name" label="Name" autoFocus value={name} className={classes.textField} onChange={onTextFieldUpdate(setName)}></TextField>

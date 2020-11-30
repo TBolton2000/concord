@@ -59,8 +59,6 @@ export const Header: React.FunctionComponent = (props) => {
                     <UserSettingsModal  key={2} open={open} setOpen={setOpen} data={data}></UserSettingsModal>
                   ]
                 : [
-                    <Button color="inherit" href="/login" key={0}>Login</Button>, 
-                    <Button color="inherit" href="/signup" key={1}>Sign up</Button>
                   ] 
             }
           </div>
