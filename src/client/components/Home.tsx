@@ -46,9 +46,8 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    background: "#4C96D7",
   },
-
-
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -149,9 +148,6 @@ export const Home: React.FunctionComponent = () => {
           <Container maxWidth="md">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
               Concord: Interviewing Simplified
-                </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-
             </Typography>
             <Typography component="h2" variant="h4" align="center" color="textPrimary" gutterBottom>
               Our Mission
@@ -194,6 +190,7 @@ export const Home: React.FunctionComponent = () => {
                   research interests involve hardware security, 
                   data science, and network security."
               github="https://github.com/AMyscich"
+              linkedin="https://www.linkedin.com/in/albin-kyle-myscich-a1b495b4/"
               email="mailto:AMyscich@tamu.edu?subject=Howdy!"
             />
 
@@ -203,6 +200,7 @@ export const Home: React.FunctionComponent = () => {
               image="../../assets/images/Trevor.jpg"
               description=""
               github="https://github.com/TBolton2000"
+              linkedin="https://www.linkedin.com/in/trevor-bolton-428158192/"
               email="mailto:tbolton2000@tamu.edu?subject=Howdy!"
             />
 
@@ -217,6 +215,7 @@ export const Home: React.FunctionComponent = () => {
                   University at Buffalo. My interests include coding,
                   playing piano, exercising, and cooking Middle Eastern food."
               github="https://github.com/coachshilleh"
+              linkedin="https://www.linkedin.com/in/mahmood-shilleh-0385bb133/"
               email="mailto:mahmoods@tamu.edu?subject=Howdy!"
             />
 
@@ -231,6 +230,7 @@ export const Home: React.FunctionComponent = () => {
                   Chemical Engineering also at TAMU. In my free time, I enjoy
                   reading about history and playing soccer."
               github="https://github.com/Qusaiamer"
+              linkedin="https://www.linkedin.com/in/qusai-amer-267909127/"
               email="mailto:qusai3mer@tamu.edu?subject=Howdy!"
             />
 
@@ -246,6 +246,7 @@ export const Home: React.FunctionComponent = () => {
                   mathematics. My hobbies include painting, photography and 
                   listening to music."
               github="https://github.com/peiman95"
+              linkedin="https://www.linkedin.com/in/peiman-mohseni-4005521a4/"
               email="mailto:peiman.mohseni@tamu.edu?subject=Howdy!"
             />
 
@@ -256,6 +257,7 @@ export const Home: React.FunctionComponent = () => {
               description="
                   ..."
               github="https://github.com/Gowtham153"
+              linkedin="https://www.linkedin.com/in/gowtham-batchala-a50948b2/"
               email="mailto:gowtham153@tamu.edu?subject=Howdy!"
             />
 

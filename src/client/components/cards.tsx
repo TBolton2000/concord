@@ -1,6 +1,6 @@
 import React from "react"
 import { Grid, Card, CardMedia, CardContent, Typography, makeStyles, Accordion, AccordionDetails, AccordionSummary, IconButton } from "@material-ui/core"
-import { Email, ExpandMore, GitHub } from '@material-ui/icons';
+import { Email, ExpandMore, GitHub, LinkedIn } from '@material-ui/icons';
 
 const useStyles = makeStyles(() => ({
     accordion: {
@@ -32,10 +32,11 @@ interface Props {
     image: string,
     description: string,
     github: string,
+    linkedin: string,
     email: string
 }
 
-export const Cards: React.FC<Props> = ({ title, greeting, image, description, github, email }) => {
+export const Cards: React.FC<Props> = ({ title, greeting, image, description, github, linkedin, email }) => {
 
     const classes = useStyles();
 
@@ -54,6 +55,9 @@ export const Cards: React.FC<Props> = ({ title, greeting, image, description, gi
                     <div>
                         <IconButton href={github} target="_blank">
                             <GitHub />
+                        </IconButton>
+                        <IconButton href={linkedin} target="_blank">
+                            <LinkedIn />
                         </IconButton>
                         <IconButton href={email}>
                             <Email />
