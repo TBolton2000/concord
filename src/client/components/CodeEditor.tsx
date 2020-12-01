@@ -9,22 +9,45 @@ import { ControlledEditor } from "@monaco-editor/react";
 import { Result } from './editor_comps/Result';
 import axios from "axios";
 import { RouteComponentProps } from "react-router-dom";
+import {io as socketIOClient, Socket} from "socket.io-client";
 
-export const CodeEditor: React.FunctionComponent<RouteComponentProps> = ({}) => {
+export const CodeEditor: React.FunctionComponent<RouteComponentProps|{name:string}> = ({name}) => {
     const [isEditorReady, setIsEditorReady] = useState(false);
-    const numOfParticipants = 5;
-    const [selectedTab, setSelectedTab] = React.useState(0);
-    const [data, setData] = useState([
-        "import " + (Array.from({ length: numOfParticipants }, (_, i) => i + 1)).map(element => "participant" + element).join(", ") + "\n",
-        ...Array(numOfParticipants).fill(
-            "# define functions here" +
-            "\n\n\n" + 
-            "if __name__ == \"__main__\":\n" +
-            "\t# put individual test code here\n" +
-            "\tprint(\"Hello World!\")"
-        )]);
+    const numOfParticipants = 3;
+    const roomId = "myRoom";
+    const [selectedTab, setSelectedTab] = useState(0);
+    const [data, setData] = useState<string[]>(Array(numOfParticipants+1).fill(""));
+    const [participantNo, setParticipantNo] = useState(0);
     const [terminal, setTerminal] = useState("");
-    console.log(data);
+    const [socket, setSocket] = useState<Socket|null>(null);
+
+    useEffect(() => {
+        const socket = socketIOClient();
+        setSocket(socket);
+        socket.emit("joinRoom", {roomId, name});
+        socket.on("init", (room) => {
+            console.log("initializing");
+            console.log(room.users.find(user => user.id === socket.id).participantNo);
+            setParticipantNo(room.users.find(user => user.id === socket.id).participantNo);
+            setData(room.data);
+        });
+        socket.on("changeOne", ({newCode, idx}) => {
+            setData( data =>
+                data.map(
+                    (datum, index) => index === idx ? newCode : datum
+                )
+            );
+        });
+        return () => socket.close();
+    }, []);
+    
+    
+    // useEffect(() => {
+    //     if (socket) {
+            
+    //     }
+    // },[socket, data]);
+
     const handleChange = (event, newValue) => {
         setSelectedTab(newValue);
     }
@@ -34,11 +57,15 @@ export const CodeEditor: React.FunctionComponent<RouteComponentProps> = ({}) => 
     }
 
     const handleEditorChange = (ev, value, selectedTab) => {
+        if (socket && participantNo !== 0) {
+            console.log("sent update");
+            socket.emit("update", {roomId, idx: selectedTab, newCode: value});
+        }
         setData(
-            data.map((datum, index) => 
-              index === selectedTab ? value : datum
+            data.map(
+                (datum, index) => index === selectedTab ? value : datum
             )
-        )    
+        );
     }
 
     const runIndividual = () => {
@@ -99,7 +126,7 @@ export const CodeEditor: React.FunctionComponent<RouteComponentProps> = ({}) => 
                 <Tabs indicatorColor="primary" textColor="primary" variant="fullWidth" value={selectedTab} onChange={handleChange}>
                     <Tab label="main.py"/>
                     {(Array.from({ length: numOfParticipants }, (_, i) => i + 1)).map(element =>
-                        <Tab key={element} label={`Participant ${element}`}/>
+                        <Tab key={element} label={`Participant ${element}`+ (element === participantNo ? " (You)" : "")}/>
                     )}
                 </Tabs>
                 <Button onClick={runIndividual}>
