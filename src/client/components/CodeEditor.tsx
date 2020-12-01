@@ -32,7 +32,7 @@ export const CodeEditor: React.FunctionComponent<RouteComponentProps|{name:strin
             setData(room.data);
         });
         socket.on("changeOne", ({newCode, idx}) => {
-            setData( data =>
+            setData(data =>
                 data.map(
                     (datum, index) => index === idx ? newCode : datum
                 )
@@ -56,7 +56,7 @@ export const CodeEditor: React.FunctionComponent<RouteComponentProps|{name:strin
         setIsEditorReady(true);
     }
 
-    const handleEditorChange = (ev, value, selectedTab) => {
+    const handleEditorChange = (ev, value) => {
         if (socket && participantNo !== 0) {
             console.log("sent update");
             socket.emit("update", {roomId, idx: selectedTab, newCode: value});
