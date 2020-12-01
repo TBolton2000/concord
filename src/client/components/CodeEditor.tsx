@@ -20,6 +20,7 @@ export const CodeEditor: React.FunctionComponent<RouteComponentProps|{name:strin
     const [participantNo, setParticipantNo] = useState(0);
     const [terminal, setTerminal] = useState("");
     const [socket, setSocket] = useState<Socket|null>(null);
+    const [changingTabs, setChangingTabs] = useState(false);
 
     useEffect(() => {
         const socket = socketIOClient();
@@ -50,6 +51,7 @@ export const CodeEditor: React.FunctionComponent<RouteComponentProps|{name:strin
 
     const handleChange = (event, newValue) => {
         setSelectedTab(newValue);
+        setChangingTabs(true);
     }
 
     function handleEditorDidMount() {
@@ -57,15 +59,16 @@ export const CodeEditor: React.FunctionComponent<RouteComponentProps|{name:strin
     }
 
     const handleEditorChange = (ev, value) => {
-        if (socket && participantNo !== 0) {
+        if (socket && participantNo !== 0 && !changingTabs) {
             console.log("sent update");
             socket.emit("update", {roomId, idx: selectedTab, newCode: value});
+            setData(data =>
+                data.map(
+                    (datum, index) => index === selectedTab ? value : datum
+                )
+            );
         }
-        setData(
-            data.map(
-                (datum, index) => index === selectedTab ? value : datum
-            )
-        );
+        setChangingTabs(false);
     }
 
     const runIndividual = () => {
