@@ -46,7 +46,7 @@ export const Header: React.FunctionComponent = (props) => {
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>   
-            <a href="/"><img className={classes.titleImage} src={".../../../assets/images/LogoOnly.png"}/></a>          
+            <a href="/"><img className={classes.titleImage} src={".../../../assets/images/logoOnly.png"}/></a>          
             <Button color="inherit" className={classes.titleStyles} href="/">Concord</Button>
           </Typography>
           <div>

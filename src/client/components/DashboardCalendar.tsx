@@ -2,7 +2,7 @@ import moment from "moment"
 import React, { useState } from "react";
 
 import { EventsModal } from "./Modals"
-import { Card, CardContent } from "@material-ui/core";
+import { Button, Card, CardContent } from "@material-ui/core";
 import { Calendar, momentLocalizer, View, DateLocalizer } from "react-big-calendar"
 
 import * as dates from "../../../node_modules/react-big-calendar/lib/utils/dates"
@@ -94,6 +94,7 @@ export const DashboardCalendar: React.FC<DashboardCalendarProps> = () => {
                         <EventsCalendar localizer={localizer} />
                     </div>
                 </CardContent>
+                <Button href="/code-editor">Go to Interview</Button>
             </Card>
         </div>
     );

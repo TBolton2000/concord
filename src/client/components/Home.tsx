@@ -81,6 +81,7 @@ export const Home: React.FC<RouteComponentProps> = ({history}) => {
   const classes = useStyles();
 
   const submitForm = async () => {
+    try {
     const response = await login({
       variables: {
           email,
@@ -98,10 +99,13 @@ export const Home: React.FC<RouteComponentProps> = ({history}) => {
           })
       }
     })
-
+    console.log(response);
     if (response && response.data) {
         setAccessToken(response.data.login.accessToken);
-        history.push("/");
+        history.push("/dashboard-upper");
+    }
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -118,7 +122,7 @@ export const Home: React.FC<RouteComponentProps> = ({history}) => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <form className={classes.form} noValidate>
+            <div className="form">
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -145,10 +149,6 @@ export const Home: React.FC<RouteComponentProps> = ({history}) => {
                 value={password}
                 onChange={onTextFieldUpdate(setPassword)}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
@@ -171,7 +171,7 @@ export const Home: React.FC<RouteComponentProps> = ({history}) => {
                   </Link>
                 </Grid>
               </Grid>
-            </form>
+          </div>
           </div>
         </Grid>
       </Grid>
