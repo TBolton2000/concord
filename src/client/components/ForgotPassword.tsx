@@ -43,14 +43,21 @@ export const ForgotPassword: React.FunctionComponent = () => {
     const classes = useStyles({});
 
     const resetToken = async (email) => {
-        if (email != '') {
+        const success = await resetPasswordToken({variables: {email}})
+        console.log(success);
+        if (success.data.resetPasswordToken === false) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Email Not Sent',
+                text: "Email is invalid",
+            });
+        } else {
             Swal.fire({
                 icon: 'success',
                 title: 'Email Sent',
                 text: "If their is an account associated with this email, an email will be sent",
             });
         }
-        resetPasswordToken({variables: {email}})
     }
 
     return(
