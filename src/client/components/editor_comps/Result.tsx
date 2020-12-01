@@ -17,12 +17,12 @@ const ResultArea = styled.div`
 `;
 
 export function Result(props) {
-  const markdownText = "> #### The quarterly results look great!\n" +
+  const markdownText = "> #### Fibonacci Primes!\n" +
                         ">\n" +
-                        "> - Revenue was off the chart.\n" +
-                        "> - Profits were higher than ever.\n" +
+                        "> - Create a function that generates the fibonacci series.\n" +
+                        "> - Create a function that checks if a number is prime.\n" +
                         ">\n" + 
-                        ">  Everything is going according to plan.";
+                        ">  Find all fibonacci primes less than 1 million.";
   return (
     <Container>
       <ResultArea>

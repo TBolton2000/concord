@@ -7,7 +7,6 @@ import { SideMenu } from './components/SideMenu';
 import { Home } from './components/Home';
 import { StyledComponentsExample } from './components/StyledComponentsExample';
 import { UsersList } from './components/UsersList';
-import { Login } from './components/Login';
 import { SignUp } from './components/Signup';
 import { ForgotPassword } from './components/ForgotPassword';
 import { ResetPassword } from './components/ResetPassword';
@@ -60,7 +59,6 @@ export const App = () => {
             <Route exact path='/' component={Home} />
             <Route path='/users-list' component={UsersList} />
             <Route path='/styled-example' component={StyledComponentsExample} />
-            <Route path='/login' component={Login} />
             <Route path='/code-editor' component={CodeEditor} />
             <Route path='/signup' component={SignUp} />
             <Route path='/contact-us' component={ContactUs} />
