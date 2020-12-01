@@ -149,7 +149,7 @@ export const CodeEditor: React.FunctionComponent<RouteComponentProps|{name:strin
                         language="python"
                         loading={<Loader />}
                         value={data[selectedTab]}
-                        onChange={(ev, value) => handleEditorChange(ev, value, selectedTab)}
+                        onChange={(ev, value) => handleEditorChange(ev, value)}
                         editorDidMount={handleEditorDidMount} />
                     <TextField multiline rows={5} variant="filled" value={terminal} fullWidth/>
                 </Grid>
