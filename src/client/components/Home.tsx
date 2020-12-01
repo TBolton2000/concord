@@ -1,22 +1,16 @@
-import React from 'react';
-
-import Grid from '@material-ui/core/Grid';
+import React, { useState } from 'react';
+import { makeStyles, TextField, Button, Paper, Link, Grid } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Container from '@material-ui/core/Container/Container';
-
-import { makeStyles } from '@material-ui/core';
-
 import { Cards } from './cards';
-
+import { RouteComponentProps } from "react-router-dom";
+import { MeDocument, MeQuery, useLoginMutation } from "../generated/graphql";
+import { setAccessToken } from "./accessToken";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,8 +68,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Home: React.FunctionComponent = () => {
+const onTextFieldUpdate = (toUpdate : React.Dispatch<React.SetStateAction<string>>) => {
+  return (e : React.ChangeEvent<HTMLInputElement>) => {
+      toUpdate(e.target.value);
+  };
+}
+
+export const Home: React.FC<RouteComponentProps> = ({history}) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [login] = useLoginMutation();
   const classes = useStyles();
+
+  const submitForm = async () => {
+    const response = await login({
+      variables: {
+          email,
+          password
+      },
+      update: (store, {data}) => {
+          if (!data) {
+              return null;
+          }
+          store.writeQuery<MeQuery>({
+              query: MeDocument,
+              data: {
+                  me: data.login.user
+              }
+          })
+      }
+    })
+
+    if (response && response.data) {
+        setAccessToken(response.data.login.accessToken);
+        history.push("/");
+    }
+  }
 
   return (
     <>
@@ -101,6 +129,8 @@ export const Home: React.FunctionComponent = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                value={email}
+                onChange={onTextFieldUpdate(setEmail)}
               />
               <TextField
                 variant="outlined"
@@ -112,6 +142,8 @@ export const Home: React.FunctionComponent = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                onChange={onTextFieldUpdate(setPassword)}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -123,17 +155,18 @@ export const Home: React.FunctionComponent = () => {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={submitForm}
               >
                 Sign In
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="/forgotpassword" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { useResetPasswordMutation} from '../generated/graphql';
 import { useParams, RouteComponentProps } from "react-router-dom";
 import { createStyles, Theme } from '@material-ui/core/styles';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,6 +57,11 @@ export const ResetPassword: React.FC<RouteComponentProps> = () => {
         if (newPassword === confirmPassword){
           return await resetPassword({variables: {token, newPassword}});
         }
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "Passwords must be the same"
+        });
         return false;
     }
     
